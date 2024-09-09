@@ -31,5 +31,6 @@ public class Exercicio11 {
         //Resultado da Troca
         System.out.printf("\nA = %d\nB = %d",A,B);
 
+        read.close();
     }
 }

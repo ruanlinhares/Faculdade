@@ -31,7 +31,6 @@ public class Exercicio13NOTFINISH {
           }
 
         }
-        System.out.print(vetor[i]);
-
+        read.close();
     }
 }

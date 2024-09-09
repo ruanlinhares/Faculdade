@@ -24,5 +24,6 @@ public class Exercicio12 {
             System.out.printf("O modulo de [%d] é %d",n_int,modulecalc);
         }
 
+        read.close();
     }
 }

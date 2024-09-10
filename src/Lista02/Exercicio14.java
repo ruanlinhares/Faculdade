@@ -12,9 +12,9 @@ public class Exercicio14 {
 
         //Interação com o usuário, pedindo o valores para dizer a diferença
         System.out.println("Digite um número: ");
-        n1 = read.nextInt();
+        n1 = read.nextDouble();
         System.out.println("Digite outro número: ");
-        n2 = read.nextInt();
+        n2 = read.nextDouble();
 
         /* Fazendo a verificação para sempre o menor valor subtrair
         do menor, sempre obtendo uma diferença positiva*/

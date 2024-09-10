@@ -19,9 +19,9 @@ public class Exercicio11 {
         //Operação de troca
         aux = A; //aux recebe o valor de A
         A = B;// B copia seu valor para A
-        B = aux;//B recebe o valor de A que foi armazenado em aux;
+        B = aux;//B recebe o valor de A que foi armazenado em aux
 
-        //Um contador usando o método Thread.sleep() para fazer suspense
+        //Um contador usando o método Thread.sleep() para fazer suspense.
         System.out.println("Trocando valores em...");
         for(int i = 3; i >= 1 ; i--){
             System.out.println(i);

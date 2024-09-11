@@ -38,5 +38,6 @@ public class Exercicio19 {
         }catch (InputMismatchException ex){
             System.out.println("O programa somente aceita valores numéricos");
         }
+        read.close();
     }
 }

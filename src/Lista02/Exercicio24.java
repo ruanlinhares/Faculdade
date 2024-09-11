@@ -70,6 +70,8 @@ public class Exercicio24 {
             escolha = read.next();
         }while (Objects.equals(escolha,"s") || Objects.equals(escolha, "S"));
 
+        read.close();
+
 
     }
 }

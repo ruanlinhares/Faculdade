@@ -19,5 +19,6 @@ public class Exercicio30 {
         for(int i = 0; i <= 10; i+=1){
             System.out.printf("%d x %d = %d\n", valor, i, (valor * i));
         }
+        read.close();
     }
 }

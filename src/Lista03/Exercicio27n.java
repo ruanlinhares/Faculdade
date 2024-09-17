@@ -2,14 +2,14 @@ package Lista03;
 
 import java.util.Scanner;
 
-public class Exercicio27 {
+public class Exercicio27n {
     public static void main(String[] args) {
         //Scanner para a entrada de dados
         Scanner read = new Scanner(System.in);
 
         //variavel para guardar o número de processos que deseja fazer.
         int num_process;
-        //vetor para guardadar os números escilhidos para as quantidades de processos.
+        //vetor para guardadar os números escolhidos para as quantidades de processos.
         int[] vetor_process;
 
         //interação com o usuario para saber a quantidade de numeros para processar.

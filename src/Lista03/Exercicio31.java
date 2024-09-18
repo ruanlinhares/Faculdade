@@ -41,5 +41,7 @@ public class Exercicio31 {
         }
         System.out.printf("SOMA DOS PARES = %d", somaPar);
         System.out.printf("\nSOMA DOS ÍMPARES = %d", somaImpar);
+
+        read.close();
     }
 }

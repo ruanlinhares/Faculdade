@@ -2,8 +2,9 @@ package Lista03;
 
 import java.util.Scanner;
 
-public class Exercicio27n {
+public class Exercicio27 {
     public static void main(String[] args) {
+        //NÃO FINALIZADO
         //Scanner para a entrada de dados
         Scanner read = new Scanner(System.in);
 
@@ -30,10 +31,10 @@ public class Exercicio27n {
                 vetor_process[j] =read.nextInt();
             }
 
-            for(int i = 0; i <= vetor_process.length - 1; i+=1) {
+            for(int i = vetor_process.length; i > 0; i-=1) {
                 int fatorial = vetor_process[i] * (vetor_process[i] - 1);
                 System.out.printf("%d! = %d\n", vetor_process[i], fatorial);
-                //ainda falta terminar.
+
             }
 
         }else{

@@ -18,6 +18,7 @@ public class Exercicio01 {
        estoqueMedio = (quantidadeMinima + quantidadeMaxima)/2;
 
        System.out.println("ESTOQUE MÉDIO: " + estoqueMedio);
+       
 
        read.close();
 

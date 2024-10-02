@@ -57,5 +57,7 @@ public class Exercicio_string02 {
             }
         }
 
+        read.close();
+
     }
 }

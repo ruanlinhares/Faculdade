@@ -51,5 +51,7 @@ public class Exercicio_string01 {
         System.out.printf("A palavra %s em maiúsculo é: %s\n", palavra, palavra.toUpperCase());
         System.out.printf("A palvra tem %s vogal/vogais\n", vogal_qtd);
         System.out.printf("A palavra tem %d digitos\n", digito_qtd);
+
+        read.close();
     }
 }

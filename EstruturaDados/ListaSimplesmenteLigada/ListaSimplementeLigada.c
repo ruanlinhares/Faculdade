@@ -30,7 +30,8 @@ typedef struct
 //Declarando funções
 Lista *criarLista();
 void imprimirElementos(Lista *);
-int inserirElemento(Lista*, Motocicleta);
+int inserirElemento(Lista *, Motocicleta);
+int inserirElementoPosi(Lista *, Motocicleta, int);
 
 //Função main
 int main ()
@@ -38,8 +39,10 @@ int main ()
 	setlocale(LC_ALL, "Portuguese");
 	
 	int opc;
+	int vPosition;
 	char continuar = ' ';
 	Motocicleta novaMoto;
+	
 
 	Lista *lista = NULL;
 
@@ -66,11 +69,10 @@ int main ()
 			printf("-------CADASTRAR NOVA MOTO-------");
 			printf("\nInsira o código: ");
 			scanf("%d", &novaMoto.cod_moto);
-			getchar();
 			printf("\nInsira a marca: ");
-			scanf("%s", &novaMoto.marca);
+			fgets(novaMoto.marca,20,stdin);
 			printf("\nInsira o modelo: ");
-			scanf("%s", &novaMoto.modelo);
+			fgets(novaMoto.modelo,20,stdin);
 			printf("\nInsira o cor: ");
 			scanf("%s", &novaMoto.cor);
 			printf("\nInsira o cilindrada: ");
@@ -90,6 +92,36 @@ int main ()
 		case 3 :
 			
 			imprimirElementos(lista);
+			break;
+		
+		case 4 :
+			
+			
+			printf("-------CADASTRAR NOVA MOTO-------");
+			printf("\nInsira o código: ");
+			scanf("%d", &novaMoto.cod_moto);
+			printf("\nInsira a marca: ");
+			fgets(novaMoto.marca,20,stdin);
+			printf("\nInsira o modelo: ");
+			fgets(novaMoto.modelo,20,stdin);
+			printf("\nInsira o cor: ");
+			scanf("%s", &novaMoto.cor);
+			printf("\nInsira o cilindrada: ");
+			scanf("%d", &novaMoto.cilindrada);
+			printf("\nInsira o partida: ");
+			scanf(" %c", &novaMoto.partida);
+			printf("\nInsira o alimentação: ");
+			scanf(" %c", &novaMoto.alimentacao);
+			printf("\nInsira o carga: ");
+			scanf("%f", &novaMoto.capacidade_carga);
+			printf("\nInsira o preço: ");
+			scanf("%f", &novaMoto.preco);
+			printf("\n\n");
+			printf("Informe a posição que deseja inserir a nova moto:");
+			scanf("%d", &vPosition);
+			
+			inserirElementoPosi(lista, novaMoto, vPosition);
+			
 			break;
 		
 		default:
@@ -181,5 +213,16 @@ int inserirElemento(Lista *lista, Motocicleta novaMoto)
 	return 1;
 }
 
+int inserirElementoPosi(Lista *lista, int vPosition, Motocicleta novaMoto){
+	if(lista == NULL){
+		printf("\nA lista não foi criada\n");
+		return 0;
+	}
+	
+	if(lista-> id == vPosition){
+		lista->elementos[lista->id] =  novaMoto;
+	}
+	return 1;
+}
 
 

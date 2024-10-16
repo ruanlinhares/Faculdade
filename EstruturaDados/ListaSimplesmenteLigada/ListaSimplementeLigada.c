@@ -41,7 +41,7 @@ Lista * excluirLista(Lista*);
 int atualizarElementos(Lista*, Motocicleta, int);
 void qtdElementosLista(Lista *);
 int salvarDados(Lista *);
-/*void carregarDados();*/
+int carregarDados(Lista *);
 
 
 //Função main
@@ -71,7 +71,8 @@ int main ()
 		printf("\n8 - Excluir lista de Motos");
 		printf("\n9 - Atualizar registro da moto");
 		printf("\n10 - Quantidade de motos registradas");
-
+		printf("\n11 - Salvar dados do programa");
+		printf("\n12 - carregar dados exitentes");
 
 
 
@@ -228,6 +229,11 @@ int main ()
 		case 11:
 
 			salvarDados(lista);
+			break;
+
+		case 12:
+
+			carregarDados(lista);
 			break;
 
 		default:
@@ -541,7 +547,7 @@ int salvarDados(Lista* lista)
 	if(lista == NULL)
 	{
 		printf("\nA lista não foi criada");
-		return 1;
+		return 0;
 	}
 
 	FILE * arquivo = fopen("RegistroMotos.txt", "w");
@@ -550,25 +556,48 @@ int salvarDados(Lista* lista)
 	if(arquivo == NULL)
 	{
 		printf("Erro ao abrir o aquivo");
-		return 1;
+		return 0;
 	}
 
 	for(i = 0; i < lista->id; ++i)
 	{
-		fprintf(arquivo, "\nMoto %d", i+1);
-		fprintf(arquivo, "\n%d", lista->elementos[i].cod_moto);
-		fprintf(arquivo, "\n%s", lista->elementos[i].marca);
-		fprintf(arquivo, "%s", lista->elementos[i].modelo);
-		fprintf(arquivo, "%c", lista->elementos[i].cor);
-		fprintf(arquivo, "\n%d", lista->elementos[i].cilindrada);
-		fprintf(arquivo, "\n%c", lista->elementos[i].partida);
-		fprintf(arquivo, "\n%c", lista->elementos[i].alimentacao);
-		fprintf(arquivo, "\n%.1f", lista->elementos[i].capacidade_carga);
-		fprintf(arquivo, "\n%.2f", lista->elementos[i].preco);
+		fprintf(arquivo, "\nMOTO %d", i + 1);
+		fprintf(arquivo, "\nCÓDIGO:%d", lista->elementos[i].cod_moto);
+		fprintf(arquivo, "\nMARCA: %s", lista->elementos[i].marca);
+		fprintf(arquivo, "MODELO: %s", lista->elementos[i].modelo);
+		fprintf(arquivo, "COR: %c", lista->elementos[i].cor);
+		fprintf(arquivo, "\nCILINDRADA: %d", lista->elementos[i].cilindrada);
+		fprintf(arquivo, "\nPARTIDA: %c", lista->elementos[i].partida);
+		fprintf(arquivo, "\nALIMENTAÇÃO: %c", lista->elementos[i].alimentacao);
+		fprintf(arquivo, "\nCARGA: %.1f KG", lista->elementos[i].capacidade_carga);
+		fprintf(arquivo, "\nPREÇO: R$ %.2f", lista->elementos[i].preco);
 	}
+	fclose(arquivo);
 
 	printf("\nDados salvos com sucesso...");
-	return 0;
+	return 1;
+}
+
+int carregarDados(Lista *lista)
+{
+	
+	FILE * arquivo = fopen("RegistroMotos.txt", "r");
+
+	if(arquivo == NULL)
+	{
+		printf("\nErro ao abrir o arquivo...");
+		return 0;
+	}
+
+
+	char registro[100];
+	while(fgets(registro, 100, arquivo) != NULL){
+		printf("%s", registro);
+	}
+
+	fclose(arquivo);
+	printf("\n\nDados carregados com sucesso...");
+	return 1;
 }
 
 

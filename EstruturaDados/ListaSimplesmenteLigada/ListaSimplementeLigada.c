@@ -63,7 +63,7 @@ int main ()
 		cabecalho();
 		printf("\n1 - Criar Lista");
 		printf("\n2 - Inserir moto");
-		printf("\n3 - inserir moto em uma posiçao na lista");
+		printf("\n3 - inserir moto em uma posição na lista");
 		printf("\n4 - inserir moto no topo da lista");
 		printf("\n5 - Imprimir Lista de motos");
 		printf("\n6 - Buscar Moto pelo código");
@@ -185,6 +185,7 @@ int main ()
 
 		case 7:
 
+			cabecalho();
 			printf("\nInsira o código da moto para remoção: ");
 			scanf("%d", &cod_busca);
 			removerElemento(lista, cod_busca);
@@ -192,7 +193,7 @@ int main ()
 
 		case 8:
 
-			excluirLista(lista);
+			lista = excluirLista(lista);
 			break;
 
 		case 9:
@@ -411,7 +412,7 @@ int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
 	return 1;
 }
 
-//falha na logica do loop
+
 int buscarElemento(Lista *lista, int cod_moto)
 {
 	int i;
@@ -436,17 +437,15 @@ int buscarElemento(Lista *lista, int cod_moto)
 			printf("Alimentação: %c\n", lista->elementos[i].alimentacao);
 			printf("Carga: %.1f kg\n", lista->elementos[i].capacidade_carga);
 			printf("Preço: R$ %.2f\n", lista->elementos[i].preco);
-		}
-		else
-		{
-			printf("Código da moto não encontrado");
-			return 0;
+			return 1;
 		}
 	}
-	return 1;
+	
+	printf("\nCódigo da moto não encontrado...");
+	return 0;
 }
 
-//falha na logica do loop
+
 int removerElemento(Lista *lista, int cod_moto)
 {
 	int i, j;
@@ -459,28 +458,24 @@ int removerElemento(Lista *lista, int cod_moto)
 
 	for(i = 0; i < lista->id; ++i)
 	{
-		if(lista->elementos[i].cod_moto == cod_moto)
+		if( cod_moto == lista->elementos[i].cod_moto)
 		{
-			for(j = i; j < lista->id; ++j)
+			for(j = i; j < lista->id - 1; ++j)
 			{
 				lista->elementos[j] = lista->elementos[j + 1];
 			}
 
 			--(lista->id);
-			
+
 			printf("Moto removida com sucesso...");
 			return 1;
-		}else
-		{
-			printf("\nCódigo da moto não encontrado...");
-			return 0;
 		}
-	}
 
-	return 1;
+	}
+	printf("\nCódigo da moto não encontrado...");
+	return 0;
 }
 
-//nao está excluindo a lista, só os registros
 Lista *excluirLista(Lista *lista)
 {
 	if(lista == NULL)
@@ -586,7 +581,7 @@ int salvarDados(Lista* lista)
 
 int carregarDados(Lista *lista)
 {
-	
+
 	FILE * arquivo = fopen("RegistroMotos.txt", "r");
 
 	if(arquivo == NULL)
@@ -597,7 +592,8 @@ int carregarDados(Lista *lista)
 
 
 	char registro[100];
-	while(fgets(registro, 100, arquivo) != NULL){
+	while(fgets(registro, 100, arquivo) != NULL)
+	{
 		printf("%s", registro);
 	}
 

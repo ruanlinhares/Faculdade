@@ -1,31 +1,11 @@
 
-1
-1
-honda
-0
-0
-0
-0
-0
-0,0
-0,00
-2
-2
-harley davidson
-0
-0
-0
-0
-0
-0,0
-0,00
-3
-3
-yamaha
-0
-0
-0
-0
-0
-0,0
-0,00
+MOTO 1
+CÓDIGO:5
+MARCA: honda
+MODELO: cbx 250
+COR: 0
+CILINDRADA: 0
+PARTIDA: 0
+ALIMENTAÇÃO: 0
+CARGA: 0,0 KG
+PREÇO: R$ 0,00

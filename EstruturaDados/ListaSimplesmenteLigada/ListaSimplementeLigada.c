@@ -63,7 +63,7 @@ int main ()
 		cabecalho();
 		printf("\n1 - Criar Lista");
 		printf("\n2 - Inserir moto");
-		printf("\n3 - inserir moto em uma posilçao na lista");
+		printf("\n3 - inserir moto em uma posiçao na lista");
 		printf("\n4 - inserir moto no topo da lista");
 		printf("\n5 - Imprimir Lista de motos");
 		printf("\n6 - Buscar Moto pelo código");
@@ -220,6 +220,7 @@ int main ()
 			scanf("%f", &novaMoto.preco);
 
 			atualizarElementos(lista, novaMoto, cod_busca);
+			break;
 
 		case 10:
 
@@ -410,6 +411,7 @@ int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
 	return 1;
 }
 
+//falha na logica do loop
 int buscarElemento(Lista *lista, int cod_moto)
 {
 	int i;
@@ -432,8 +434,8 @@ int buscarElemento(Lista *lista, int cod_moto)
 			printf("Cilindrada: %d\n", lista->elementos[i].cilindrada);
 			printf("Partida: %c\n", lista->elementos[i].partida);
 			printf("Alimentação: %c\n", lista->elementos[i].alimentacao);
-			printf("Carga: %f kg\n", lista->elementos[i].capacidade_carga);
-			printf("Preço: R$ %f\n", lista->elementos[i].preco);
+			printf("Carga: %.1f kg\n", lista->elementos[i].capacidade_carga);
+			printf("Preço: R$ %.2f\n", lista->elementos[i].preco);
 		}
 		else
 		{
@@ -441,9 +443,10 @@ int buscarElemento(Lista *lista, int cod_moto)
 			return 0;
 		}
 	}
-	return -1;
+	return 1;
 }
 
+//falha na logica do loop
 int removerElemento(Lista *lista, int cod_moto)
 {
 	int i, j;
@@ -464,8 +467,10 @@ int removerElemento(Lista *lista, int cod_moto)
 			}
 
 			--(lista->id);
-		}
-		else
+			
+			printf("Moto removida com sucesso...");
+			return 1;
+		}else
 		{
 			printf("\nCódigo da moto não encontrado...");
 			return 0;
@@ -475,6 +480,7 @@ int removerElemento(Lista *lista, int cod_moto)
 	return 1;
 }
 
+//nao está excluindo a lista, só os registros
 Lista *excluirLista(Lista *lista)
 {
 	if(lista == NULL)

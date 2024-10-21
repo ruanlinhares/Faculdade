@@ -5,9 +5,6 @@
 #include <string.h>
 #include <windows.h>
 
-//Definições
-#define TAM 5
-
 //Estruturas
 typedef struct ListaNo listaNo;
 
@@ -22,14 +19,14 @@ typedef struct
 	char alimentacao;
 	float capacidade_carga;
 	float preco;
-}Motocicleta;
+} Motocicleta;
 
 typedef struct
 {
 	listaNo *prim;
-}Lista;
+} Lista;
 
-struct ListaNo 
+struct ListaNo
 {
 	Motocicleta novaMoto;
 	listaNo *prox;
@@ -40,8 +37,8 @@ void cabecalho();
 Lista *criarLista();
 void imprimirElementos(Lista *);
 int inserirElemento(Lista *, Motocicleta);
-/*int inserirElementoPosi(Lista *, Motocicleta, int);
-int inserirElementoInicio(Lista *, Motocicleta);
+int inserirElementoPosi(Lista *, Motocicleta, int);
+/*int inserirElementoInicio(Lista *, Motocicleta);
 int buscarElemento(Lista *, int);
 int removerElemento(Lista *, int);
 Lista * excluirLista(Lista*);
@@ -290,10 +287,9 @@ Lista *criarLista()
 	return novaLista;
 }
 
-//implementar um FOR para percorrer os elementos;
 void imprimirElementos(Lista *lista)
 {
-
+	listaNo *p;
 	if(lista == NULL)
 	{
 		printf("\nA lista não foi criada");
@@ -303,78 +299,74 @@ void imprimirElementos(Lista *lista)
 		printf("\nLista vazia");
 	}
 
-	printf("\nCÓDIGO: %d", lista->prim->novaMoto.cod_moto);
-	printf("MARCA: %s", lista->prim->novaMoto.marca);
-	printf("MODELO: %s", lista->prim->novaMoto.modelo);
-	printf("\nCOR: %c", lista->prim->novaMoto.cor);
-	printf("\nCILINDRADA: %d", lista->prim->novaMoto.cilindrada);
-	printf("\nPARTIDA: %c", lista->prim->novaMoto.partida);
-	printf("\nALIMENTAÇÃO: %c", lista->prim->novaMoto.alimentacao);
-	printf("\nCARGA: %.1f kg", lista->prim->novaMoto.capacidade_carga);
-	printf("\nPREÇO: R$%.2f", lista->prim->novaMoto.preco);
+	for(p = lista->prim; p != NULL; p = p->prox)
+	{
 
+		printf("\nCÓDIGO: %d", p->novaMoto.cod_moto);
+		printf("\nMARCA: %s",  p->novaMoto.marca);
+		printf("MODELO: %s", p->novaMoto.modelo);
+		printf("COR: %c", p->novaMoto.cor);
+		printf("\nCILINDRADA: %d", p->novaMoto.cilindrada);
+		printf("\nPARTIDA: %c", p->novaMoto.partida);
+		printf("\nALIMENTAÇÃO: %c", p->novaMoto.alimentacao);
+		printf("\nCARGA: %.1f kg", p->novaMoto.capacidade_carga);
+		printf("\nPREÇO: R$%.2f", p->novaMoto.preco);
+		printf("\n");
+	}
 
 }
 
-//implementar adicionar elementos quando a lista já tiver um elemento;
 int inserirElemento(Lista *lista, Motocicleta novaMoto)
 {
+	listaNo *p;
+	listaNo *novoEspaco = (listaNo*)malloc(sizeof(listaNo));
 
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada\n");
 		return 0;
 	}
-	
-	if(lista->prim == NULL){
-		
-		lista->prim = (listaNo*)malloc(sizeof(listaNo));
-	   	lista->prim->novaMoto = novaMoto;
-	   	return 1;
-	}
-	
 
-	
-	return 0;
+	novoEspaco->novaMoto = novaMoto;
+	novoEspaco->prox = NULL;
+
+	if(lista->prim == NULL)
+	{
+		lista->prim = novoEspaco;
+		return 1;
+	}
+
+	for(p = lista->prim; p->prox != NULL ; p = p->prox);
+
+	p->prox = novoEspaco;
+
+	return 1;
 }
 
-/*int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int vPosition)
+int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int vPosition)
 {
-	int i;
+	listaNo *p;
+	listaNo *novoEspaco = (listaNo*)malloc(sizeof(listaNo);
+	
 	if(lista == NULL)
 	{
 		printf("\nA lista não foi criada\n");
 		return 0;
 	}
-
-	if(lista->id < TAM)
-	{
-		if(vPosition < lista->id)
-		{
-			for( i = lista->id; i > vPosition; --i)
-			{
-				lista->elementos[i] = lista->elementos[i - 1];
-			}
-
-			lista->elementos[vPosition] = novaMoto;
-
-			++(lista->id);
-		}
-		else
-		{
-			printf("A posição esta fora do intervalo do número de elementos");
-		}
-
+	
+	novoEspaco->novaMoto = novaMoto;
+	novoEspaco->prox = NULL;
+	
+	for(p = lista->prim; p->prox != NULL; p = p->prox);
+	
+	if(p->novaMoto.cod_moto == vPosition){
+		
 	}
-	else
-	{
-		printf("Lista sem espaço");
-		return 0;
-	}
+	
 	return 1;
 }
 
-int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
+/*int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
 {
 	int i;
 
@@ -433,7 +425,7 @@ int buscarElemento(Lista *lista, int cod_moto)
 			return 1;
 		}
 	}
-	
+
 	printf("\nCódigo da moto não encontrado...");
 	return 0;
 }

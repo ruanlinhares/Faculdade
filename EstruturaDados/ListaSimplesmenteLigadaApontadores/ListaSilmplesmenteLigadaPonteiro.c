@@ -38,9 +38,9 @@ Lista *criarLista();
 void imprimirElementos(Lista *);
 int inserirElemento(Lista *, Motocicleta);
 int inserirElementoPosi(Lista *, Motocicleta, int);
-/*int inserirElementoInicio(Lista *, Motocicleta);
+int inserirElementoInicio(Lista *, Motocicleta);
 int buscarElemento(Lista *, int);
-int removerElemento(Lista *, int);
+/*int removerElemento(Lista *, int);
 Lista * excluirLista(Lista*);
 int atualizarElementos(Lista*, Motocicleta, int);
 void qtdElementosLista(Lista *);
@@ -54,7 +54,6 @@ int main ()
 	setlocale(LC_ALL, "Portuguese");
 
 	int opc;
-	int vPosition;
 	int cod_busca;
 	char continuar = 's';
 	Motocicleta novaMoto;
@@ -143,9 +142,9 @@ int main ()
 			scanf("%f", &novaMoto.preco);
 			printf("\n\n");
 			printf("Informe a posição que deseja inserir a nova moto: ");
-			scanf("%d", &vPosition);
+			scanf("%d", &cod_busca);
 
-			//inserirElementoPosi(lista, novaMoto, vPosition);
+			inserirElementoPosi(lista, novaMoto, cod_busca);
 			break;
 
 		case 4:
@@ -171,7 +170,7 @@ int main ()
 			printf("\nInsira o preço: ");
 			scanf("%f", &novaMoto.preco);
 
-			//inserirElementoInicio(lista, novaMoto);
+			inserirElementoInicio(lista, novaMoto);
 
 		case 5 :
 
@@ -184,7 +183,7 @@ int main ()
 			cabecalho();
 			printf("\nDigite o código da moto: ");
 			scanf("%d", &cod_busca);
-			//buscarElemento(lista, cod_busca);
+			buscarElemento(lista, cod_busca);
 			break;
 
 		case 7:
@@ -343,85 +342,94 @@ int inserirElemento(Lista *lista, Motocicleta novaMoto)
 	return 1;
 }
 
-int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int vPosition)
+int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int cod_busca)
 {
 	listaNo *p;
-	listaNo *novoEspaco = (listaNo*)malloc(sizeof(listaNo);
-	
-	if(lista == NULL)
-	{
+	listaNo *novoEspaco = (listaNo*)malloc(sizeof(listaNo));
+
+	if(lista == NULL){
 		printf("\nA lista não foi criada\n");
 		return 0;
 	}
-	
+
 	novoEspaco->novaMoto = novaMoto;
 	novoEspaco->prox = NULL;
 	
-	for(p = lista->prim; p->prox != NULL; p = p->prox);
-	
-	if(p->novaMoto.cod_moto == vPosition){
-		
+	if(lista->prim == NULL){
+		lista->prim = novoEspaco;
+		return 1;
 	}
 	
-	return 1;
-}
+	for(p = lista->prim; p->prox != NULL; p = p->prox){
 
-/*int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
-{
-	int i;
-
-	if(lista == NULL)
-	{
-		printf("\nA lista não foi criada");
-		return 0;
-	}
-
-	if(lista->id < TAM)
-	{
-		for(i = lista->id; i > 0; --i)
-		{
-			lista->elementos[i] = lista->elementos[i - 1];
+		if(cod_busca == p->novaMoto.cod_moto){
+			novoEspaco->prox =
+			return 1;
+			
 		}
-
-		lista->elementos[0] = novaMoto;
-
-		++(lista->id);
-
 	}
-	else
+	
+	for(p = lista->prim; p->prox != NULL; p = p->prox);
+	p ->prox = novoEspaco;
+	
+	return 1;
+}
+
+int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
+{
+	listaNo *p;
+	listaNo *novoEspaco = (listaNo*)malloc(sizeof(listaNo));
+
+	if(lista == NULL)
 	{
-		printf("Lista sem espaço");
+		printf("\nA lista nao foi criada\n");
 		return 0;
 	}
+
+	novoEspaco->novaMoto = novaMoto;
+	novoEspaco->prox = NULL;
+
+	if(lista->prim == NULL)
+	{
+		lista->prim = novoEspaco;
+		return 1;
+	}
+
+ 	p = lista->prim;
+ 	lista->prim = novoEspaco;
+ 	lista->prim->prox = p;
+
+	
 
 	return 1;
 }
 
-
-int buscarElemento(Lista *lista, int cod_moto)
+int buscarElemento(Lista *lista, int cod_busca)
 {
-	int i;
-
+	listaNo *p;
 	if(lista == NULL)
 	{
 		printf("\nA lista não foi criada");
-		return 0;
+	}
+	if(lista->prim == NULL)
+	{
+		printf("\nLista vazia");
 	}
 
-	for(i = 0; i < lista->id; ++i)
+	for(p = lista->prim; p != NULL; p = p->prox)
 	{
-		if(lista->elementos[i].cod_moto == cod_moto)
+		if(cod_busca == p->novaMoto.cod_moto)
 		{
-			printf("\nMOTO %d\n\n", i + 1);
-			printf("Código: %d\n", lista->elementos[i].cod_moto);
-			printf("Marca: %s", lista->elementos[i].marca);
-			printf("Modelo: %s", lista->elementos[i].modelo);
-			printf("Cor: %c\n", lista->elementos[i].cor);
-			printf("Cilindrada: %d\n", lista->elementos[i].cilindrada);
-			printf("Partida: %c\n", lista->elementos[i].partida);
-			printf("Alimentação: %c\n", lista->elementos[i].alimentacao);
-			printf("Carga: %.1f kg\n", lista->elementos[i].capacidade_carga);
-			printf("Preço: R$ %.2f\n", lista->elementos[i].preco);
+			printf("\nCÓDIGO: %d", p->novaMoto.cod_moto);
+			printf("\nMARCA: %s",  p->novaMoto.marca);
+			printf("MODELO: %s", p->novaMoto.modelo);
+			printf("COR: %c", p->novaMoto.cor);
+			printf("\nCILINDRADA: %d", p->novaMoto.cilindrada);
+			printf("\nPARTIDA: %c", p->novaMoto.partida);
+			printf("\nALIMENTAÇÃO: %c", p->novaMoto.alimentacao);
+			printf("\nCARGA: %.1f kg", p->novaMoto.capacidade_carga);
+			printf("\nPREÇO: R$%.2f", p->novaMoto.preco);
+			printf("\n");
 			return 1;
 		}
 	}
@@ -430,7 +438,7 @@ int buscarElemento(Lista *lista, int cod_moto)
 	return 0;
 }
 
-
+/*
 int removerElemento(Lista *lista, int cod_moto)
 {
 	int i, j;

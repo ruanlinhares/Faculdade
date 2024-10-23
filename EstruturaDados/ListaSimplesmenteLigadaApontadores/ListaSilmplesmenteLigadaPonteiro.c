@@ -141,7 +141,7 @@ int main ()
 			printf("\nInsira o preço: ");
 			scanf("%f", &novaMoto.preco);
 			printf("\n\n");
-			printf("Informe a posição que deseja inserir a nova moto: ");
+			printf("Informe o código da moto que deseja inserir a nova moto: ");
 			scanf("%d", &cod_busca);
 
 			inserirElementoPosi(lista, novaMoto, cod_busca);
@@ -360,19 +360,16 @@ int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int cod_busca)
 		return 1;
 	}
 	
-	for(p = lista->prim; p->prox != NULL; p = p->prox){
+	for(p = lista->prim; p != NULL; p = p->prox){
 
 		if(cod_busca == p->novaMoto.cod_moto){
-			novoEspaco->prox =
+			novoEspaco->prox = p->prox;
+			p->prox = novoEspaco;
 			return 1;
-			
 		}
 	}
 	
-	for(p = lista->prim; p->prox != NULL; p = p->prox);
-	p ->prox = novoEspaco;
-	
-	return 1;
+	return 0;
 }
 
 int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)

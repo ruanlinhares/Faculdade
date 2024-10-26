@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <string.h>
-#include <windows.h>
-
 //Estruturas
 typedef struct ListaNo listaNo;
 
@@ -32,8 +30,8 @@ struct ListaNo
 	listaNo *prox;
 };
 
-//Declarando funções
-void cabecalho();
+//Declarando 
+void limparBuffer();
 Lista *criarLista();
 void imprimirElementos(Lista *);
 int inserirElemento(Lista *, Motocicleta);
@@ -48,11 +46,12 @@ int salvarDados(Lista *);
 int carregarDados(Lista *);*/
 
 
-//Função main
+//FunÃ§Ã£o main
 int main ()
 {
 	setlocale(LC_ALL, "Portuguese");
 
+	char pulline = ' ';
 	int opc;
 	int cod_busca;
 	char continuar = 's';
@@ -63,13 +62,14 @@ int main ()
 
 	do
 	{
-		cabecalho();
+		printf("%c", pulline *10);
+		printf("========MOTOROAD========");
 		printf("\n1 - Criar Lista");
 		printf("\n2 - Inserir moto");
-		printf("\n3 - inserir moto em uma posição na lista");
+		printf("\n3 - inserir moto em uma posiÃ§Ã£o na lista");
 		printf("\n4 - inserir moto no topo da lista");
 		printf("\n5 - Imprimir Lista de motos");
-		printf("\n6 - Buscar Moto pelo código");
+		printf("\n6 - Buscar Moto pelo cÃ³digo");
 		printf("\n7 - Remover Registro da Moto");
 		printf("\n8 - Excluir lista de Motos");
 		printf("\n9 - Atualizar registro da moto");
@@ -80,9 +80,8 @@ int main ()
 
 
 		printf("\n");
-		printf("\nEscolha uma opção: ");
-		scanf("%d", &opc);
-		fflush(stdin);
+		printf("\nEscolha uma opÃ§Ã£o: ");
+		scanf(" %d", &opc);
 
 		switch(opc)
 		{
@@ -93,10 +92,9 @@ int main ()
 
 		case 2:
 
-			cabecalho();
-			printf("\nInsira o código: ");
-			scanf("%d", &novaMoto.cod_moto);
-			fflush(stdin);
+			printf("\nInsira o cÃ³digo: ");
+			scanf(" %d", &novaMoto.cod_moto);
+			getchar();
 			printf("\nInsira a marca: ");
 			fgets(novaMoto.marca, 20, stdin);
 			printf("\nInsira o modelo: ");
@@ -107,11 +105,11 @@ int main ()
 			scanf("%d", &novaMoto.cilindrada);
 			printf("\nInsira o partida: ");
 			scanf(" %c", &novaMoto.partida);
-			printf("\nInsira o alimentação: ");
+			printf("\nInsira o alimentaÃ§Ã£o: ");
 			scanf(" %c", &novaMoto.alimentacao);
 			printf("\nInsira o carga: ");
 			scanf("%f", &novaMoto.capacidade_carga);
-			printf("\nInsira o preço: ");
+			printf("\nInsira o preÃ§o: ");
 			scanf("%f", &novaMoto.preco);
 
 			inserirElemento(lista, novaMoto);
@@ -120,10 +118,9 @@ int main ()
 
 		case 3 :
 
-			cabecalho();
-			printf("\nInsira o código: ");
-			scanf("%d", &novaMoto.cod_moto);
-			fflush(stdin);
+			printf("\nInsira o cÃ³digo: ");
+			scanf(" %d", &novaMoto.cod_moto);
+			getchar();
 			printf("\nInsira a marca: ");
 			fgets(novaMoto.marca, 20, stdin);
 			printf("\nInsira o modelo: ");
@@ -134,14 +131,14 @@ int main ()
 			scanf("%d", &novaMoto.cilindrada);
 			printf("\nInsira o partida: ");
 			scanf(" %c", &novaMoto.partida);
-			printf("\nInsira o alimentação: ");
+			printf("\nInsira o alimentaÃ§Ã£o: ");
 			scanf(" %c", &novaMoto.alimentacao);
 			printf("\nInsira o carga: ");
 			scanf("%f", &novaMoto.capacidade_carga);
-			printf("\nInsira o preço: ");
+			printf("\nInsira o preÃ§o: ");
 			scanf("%f", &novaMoto.preco);
 			printf("\n\n");
-			printf("Informe o código da moto que deseja inserir a nova moto: ");
+			printf("Informe o cÃ³digo da moto que deseja inserir a nova moto: ");
 			scanf("%d", &cod_busca);
 
 			inserirElementoPosi(lista, novaMoto, cod_busca);
@@ -149,10 +146,9 @@ int main ()
 
 		case 4:
 
-			cabecalho();
-			printf("\nInsira o código: ");
-			scanf("%d", &novaMoto.cod_moto);
-			fflush(stdin);
+			printf("\nInsira o cÃ³digo: ");
+			scanf(" %d", &novaMoto.cod_moto);
+			getchar();
 			printf("\nInsira a marca: ");
 			fgets(novaMoto.marca, 20, stdin);
 			printf("\nInsira o modelo: ");
@@ -163,34 +159,34 @@ int main ()
 			scanf("%d", &novaMoto.cilindrada);
 			printf("\nInsira o partida: ");
 			scanf(" %c", &novaMoto.partida);
-			printf("\nInsira o alimentação: ");
+			printf("\nInsira o alimentaï¿½ï¿½o: ");
 			scanf(" %c", &novaMoto.alimentacao);
 			printf("\nInsira o carga: ");
 			scanf("%f", &novaMoto.capacidade_carga);
-			printf("\nInsira o preço: ");
+			printf("\nInsira o preÃ§o: ");
 			scanf("%f", &novaMoto.preco);
 
 			inserirElementoInicio(lista, novaMoto);
+			break;
 
 		case 5 :
 
-			cabecalho();
 			imprimirElementos(lista);
 			break;
 
 		case 6:
 
-			cabecalho();
-			printf("\nDigite o código da moto: ");
-			scanf("%d", &cod_busca);
+			
+			printf("\nDigite o codigo da moto: ");
+			scanf(" %d", &cod_busca);
 			buscarElemento(lista, cod_busca);
 			break;
 
 		case 7:
 
-			cabecalho();
-			printf("\nInsira o código da moto para remoção: ");
-			scanf("%d", &cod_busca);
+			
+			printf("\nInsira o cÃ³digo da moto para remover: ");
+			scanf(" %d", &cod_busca);
 			//removerElemento(lista, cod_busca);
 			break;
 
@@ -201,11 +197,10 @@ int main ()
 
 		case 9:
 
-			cabecalho();
-			printf("\nInsira o código da moto que deseja atualizar: ");
-			scanf("%d", &cod_busca);
-			fflush(stdin);
-
+			
+			printf("\nInsira o cÃ³digo da moto que deseja atualizar: ");
+			scanf(" %d", &cod_busca);
+			getchar();
 			printf("\nInsira a marca: ");
 			fgets(novaMoto.marca, 20, stdin);
 			printf("\nInsira o modelo: ");
@@ -216,11 +211,11 @@ int main ()
 			scanf("%d", &novaMoto.cilindrada);
 			printf("\nInsira o partida: ");
 			scanf(" %c", &novaMoto.partida);
-			printf("\nInsira o alimentação: ");
+			printf("\nInsira o alimentaÃ§Ã£o: ");
 			scanf(" %c", &novaMoto.alimentacao);
 			printf("\nInsira o carga: ");
 			scanf("%f", &novaMoto.capacidade_carga);
-			printf("\nInsira o preço: ");
+			printf("\nInsira o preÃ§o: ");
 			scanf("%f", &novaMoto.preco);
 
 			//atualizarElementos(lista, novaMoto, cod_busca);
@@ -243,43 +238,32 @@ int main ()
 
 		default:
 
-			printf("\nOpção inválida");
+			printf("\nOpÃ§Ã£o invÃ¡lida");
 			break;
 		}
 
 		printf("\n\nDeseja continuar?[s/n]\n");
-		fflush(stdin);
-		scanf("%c", &continuar);
+		scanf(" %c", &continuar);
 
 		if(continuar == 'n' || continuar == 'N')
 		{
 			exit(0);
 		}
-		else
-		{
-			printf("\n\nOpção inválida...Prosseguindo com a aplicação");
-		}
 
 	}
 	while(continuar == 's' || continuar == 'S' );
+	
 	return 0;
 }
 
-//Funções
-
-void cabecalho()
-{
-	system("cls||clear");
-	printf("=========MotorRoad========");
-}
-
+//FunÃ§Ãµes
 Lista *criarLista()
 {
 	Lista *novaLista = (Lista*)malloc(sizeof(Lista));
 
 	if(novaLista == NULL)
 	{
-		printf("Erro na alocação de memória");
+		printf("Erro na alocacao de memoria");
 		return NULL;
 	}
 
@@ -291,25 +275,25 @@ void imprimirElementos(Lista *lista)
 	listaNo *p;
 	if(lista == NULL)
 	{
-		printf("\nA lista não foi criada");
+		printf("\nA lista nao foi criada...");
 	}
 	if(lista->prim == NULL)
 	{
-		printf("\nLista vazia");
+		printf("\nLista vazia...");
 	}
 
 	for(p = lista->prim; p != NULL; p = p->prox)
 	{
 
-		printf("\nCÓDIGO: %d", p->novaMoto.cod_moto);
+		printf("\nCÃ“DIGO: %d", p->novaMoto.cod_moto);
 		printf("\nMARCA: %s",  p->novaMoto.marca);
 		printf("MODELO: %s", p->novaMoto.modelo);
 		printf("COR: %c", p->novaMoto.cor);
 		printf("\nCILINDRADA: %d", p->novaMoto.cilindrada);
 		printf("\nPARTIDA: %c", p->novaMoto.partida);
-		printf("\nALIMENTAÇÃO: %c", p->novaMoto.alimentacao);
+		printf("\nALIMENTACAO: %c", p->novaMoto.alimentacao);
 		printf("\nCARGA: %.1f kg", p->novaMoto.capacidade_carga);
-		printf("\nPREÇO: R$%.2f", p->novaMoto.preco);
+		printf("\nPRECO: R$%.2f", p->novaMoto.preco);
 		printf("\n");
 	}
 
@@ -322,7 +306,7 @@ int inserirElemento(Lista *lista, Motocicleta novaMoto)
 
 	if(lista == NULL)
 	{
-		printf("\nA lista nao foi criada\n");
+		printf("\nA lista nao foi criada...\n");
 		return 0;
 	}
 
@@ -345,30 +329,43 @@ int inserirElemento(Lista *lista, Motocicleta novaMoto)
 int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int cod_busca)
 {
 	listaNo *p;
+	listaNo *espacoAnterior;
 	listaNo *novoEspaco = (listaNo*)malloc(sizeof(listaNo));
 
 	if(lista == NULL){
-		printf("\nA lista não foi criada\n");
+		printf("\nA lista nao foi criada...\n");
 		return 0;
 	}
 
 	novoEspaco->novaMoto = novaMoto;
 	novoEspaco->prox = NULL;
-	
+
 	if(lista->prim == NULL){
 		lista->prim = novoEspaco;
 		return 1;
 	}
-	
-	for(p = lista->prim; p != NULL; p = p->prox){
 
+	if(lista->prim->novaMoto.cod_moto == cod_busca){
+		
+		novoEspaco->prox = lista->prim;
+		lista->prim = novoEspaco;
+		
+		return 1;
+	}
+
+	for(p = lista->prim; p != NULL; espacoAnterior = p , p = p->prox){
+				
+			
 		if(cod_busca == p->novaMoto.cod_moto){
-			novoEspaco->prox = p->prox;
-			p->prox = novoEspaco;
+			
+			novoEspaco->prox = p;
+			espacoAnterior->prox = novoEspaco;
+			
 			return 1;
 		}
+		
 	}
-	
+
 	return 0;
 }
 
@@ -379,7 +376,7 @@ int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
 
 	if(lista == NULL)
 	{
-		printf("\nA lista nao foi criada\n");
+		printf("\nA lista nao foi criada...\n");
 		return 0;
 	}
 
@@ -396,8 +393,6 @@ int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
  	lista->prim = novoEspaco;
  	lista->prim->prox = p;
 
-	
-
 	return 1;
 }
 
@@ -406,7 +401,7 @@ int buscarElemento(Lista *lista, int cod_busca)
 	listaNo *p;
 	if(lista == NULL)
 	{
-		printf("\nA lista não foi criada");
+		printf("\nA lista nÃ£o foi criada");
 	}
 	if(lista->prim == NULL)
 	{
@@ -417,21 +412,21 @@ int buscarElemento(Lista *lista, int cod_busca)
 	{
 		if(cod_busca == p->novaMoto.cod_moto)
 		{
-			printf("\nCÓDIGO: %d", p->novaMoto.cod_moto);
+			printf("\nCÃ“DIGO: %d", p->novaMoto.cod_moto);
 			printf("\nMARCA: %s",  p->novaMoto.marca);
 			printf("MODELO: %s", p->novaMoto.modelo);
 			printf("COR: %c", p->novaMoto.cor);
 			printf("\nCILINDRADA: %d", p->novaMoto.cilindrada);
 			printf("\nPARTIDA: %c", p->novaMoto.partida);
-			printf("\nALIMENTAÇÃO: %c", p->novaMoto.alimentacao);
+			printf("\nALIMENTAO: %c", p->novaMoto.alimentacao);
 			printf("\nCARGA: %.1f kg", p->novaMoto.capacidade_carga);
-			printf("\nPREÇO: R$%.2f", p->novaMoto.preco);
+			printf("\nPREÃ‡O: R$%.2f", p->novaMoto.preco);
 			printf("\n");
 			return 1;
 		}
 	}
 
-	printf("\nCódigo da moto não encontrado...");
+	printf("\nCÃ³digo da moto nÃ£o encontrado...");
 	return 0;
 }
 
@@ -462,7 +457,7 @@ int removerElemento(Lista *lista, int cod_moto)
 		}
 
 	}
-	printf("\nCódigo da moto não encontrado...");
+	printf("\nCï¿½digo da moto nï¿½o encontrado...");
 	return 0;
 }
 
@@ -489,7 +484,7 @@ int atualizarElementos(Lista *lista,  Motocicleta novaMoto, int cod_busca)
 
 	if (lista == NULL)
 	{
-		printf("\nA lista não foi criada");
+		printf("\nA lista nï¿½o foi criada");
 		return 0;
 	}
 
@@ -507,7 +502,7 @@ int atualizarElementos(Lista *lista,  Motocicleta novaMoto, int cod_busca)
 	}
 	else
 	{
-		printf("\nCodigo da moto não encontrado...");
+		printf("\nCodigo da moto nï¿½o encontrado...");
 		return 0;
 	}
 	return 1;
@@ -519,7 +514,7 @@ void qtdElementosLista(Lista *lista)
 
 	if (lista == NULL)
 	{
-		printf("\nA lista não foi criada");
+		printf("\nA lista nï¿½o foi criada");
 	}
 	if(qtd_elementos > 0)
 	{
@@ -527,7 +522,7 @@ void qtdElementosLista(Lista *lista)
 	}
 	else
 	{
-		printf("A lista está vazia...");
+		printf("A lista estï¿½ vazia...");
 	}
 }
 
@@ -537,7 +532,7 @@ int salvarDados(Lista* lista)
 
 	if(lista == NULL)
 	{
-		printf("\nA lista não foi criada");
+		printf("\nA lista nï¿½o foi criada");
 		return 0;
 	}
 
@@ -553,15 +548,15 @@ int salvarDados(Lista* lista)
 	for(i = 0; i < lista->id; ++i)
 	{
 		fprintf(arquivo, "\nMOTO %d", i + 1);
-		fprintf(arquivo, "\nCÓDIGO:%d", lista->elementos[i].cod_moto);
+		fprintf(arquivo, "\nCï¿½DIGO:%d", lista->elementos[i].cod_moto);
 		fprintf(arquivo, "\nMARCA: %s", lista->elementos[i].marca);
 		fprintf(arquivo, "MODELO: %s", lista->elementos[i].modelo);
 		fprintf(arquivo, "COR: %c", lista->elementos[i].cor);
 		fprintf(arquivo, "\nCILINDRADA: %d", lista->elementos[i].cilindrada);
 		fprintf(arquivo, "\nPARTIDA: %c", lista->elementos[i].partida);
-		fprintf(arquivo, "\nALIMENTAÇÃO: %c", lista->elementos[i].alimentacao);
+		fprintf(arquivo, "\nALIMENTAï¿½ï¿½O: %c", lista->elementos[i].alimentacao);
 		fprintf(arquivo, "\nCARGA: %.1f KG", lista->elementos[i].capacidade_carga);
-		fprintf(arquivo, "\nPREÇO: R$ %.2f", lista->elementos[i].preco);
+		fprintf(arquivo, "\nPREï¿½O: R$ %.2f", lista->elementos[i].preco);
 	}
 	fclose(arquivo);
 

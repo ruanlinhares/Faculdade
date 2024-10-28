@@ -38,10 +38,11 @@ int inserirElemento(Lista *, Motocicleta);
 int inserirElementoPosi(Lista *, Motocicleta, int);
 int inserirElementoInicio(Lista *, Motocicleta);
 int buscarElemento(Lista *, int);
-/*int removerElemento(Lista *, int);
-Lista * excluirLista(Lista*);
+int removerElemento(Lista *, int);
+//Lista * excluirLista(Lista*);
 int atualizarElementos(Lista*, Motocicleta, int);
 void qtdElementosLista(Lista *);
+/*
 int salvarDados(Lista *);
 int carregarDados(Lista *);*/
 
@@ -187,7 +188,7 @@ int main ()
 			
 			printf("\nInsira o código da moto para remover: ");
 			scanf(" %d", &cod_busca);
-			//removerElemento(lista, cod_busca);
+				removerElemento(lista, cod_busca);
 			break;
 
 		case 8:
@@ -218,12 +219,12 @@ int main ()
 			printf("\nInsira o preço: ");
 			scanf("%f", &novaMoto.preco);
 
-			//atualizarElementos(lista, novaMoto, cod_busca);
+			atualizarElementos(lista, novaMoto, cod_busca);
 			break;
 
 		case 10:
 
-			//qtdElementosLista(lista);
+			qtdElementosLista(lista);
 			break;
 
 		case 11:
@@ -430,10 +431,9 @@ int buscarElemento(Lista *lista, int cod_busca)
 	return 0;
 }
 
-/*
+
 int removerElemento(Lista *lista, int cod_moto)
 {
-	int i, j;
 
 	if(lista == NULL)
 	{
@@ -441,26 +441,12 @@ int removerElemento(Lista *lista, int cod_moto)
 		return 0;
 	}
 
-	for(i = 0; i < lista->id; ++i)
-	{
-		if( cod_moto == lista->elementos[i].cod_moto)
-		{
-			for(j = i; j < lista->id - 1; ++j)
-			{
-				lista->elementos[j] = lista->elementos[j + 1];
-			}
-
-			--(lista->id);
-
-			printf("Moto removida com sucesso...");
-			return 1;
-		}
-
-	}
+	
 	printf("\nC�digo da moto n�o encontrado...");
 	return 0;
 }
 
+/*
 Lista *excluirLista(Lista *lista)
 {
 	if(lista == NULL)
@@ -476,56 +462,59 @@ Lista *excluirLista(Lista *lista)
 	printf("\nLista de Motos excluida com sucesso...");
 
 	return NULL;
-}
+}*/
 
+//possui um bug na numeração do código
 int atualizarElementos(Lista *lista,  Motocicleta novaMoto, int cod_busca)
 {
-	int i;
+	listaNo *p;
 
 	if (lista == NULL)
 	{
-		printf("\nA lista n�o foi criada");
+		printf("\nA lista não foi criada");
 		return 0;
 	}
 
-	if(cod_busca >= 0 )
-	{
-		for(i = 0; i <= lista->id; i += 1)
-		{
-			if(lista->elementos[i].cod_moto == cod_busca)
-			{
-				lista->elementos[i] = novaMoto;
-
-				printf("\nDados alterados com sucesso...");
-			}
+	if(lista->prim->novaMoto.cod_moto == cod_busca){
+		
+		lista->prim->novaMoto = novaMoto;
+		return 1;
+	}
+	
+	for(p = lista->prim; p != NULL; p = p->prox){
+				
+			
+		if(cod_busca == p->novaMoto.cod_moto){
+			
+			p->novaMoto = novaMoto;
+			
+			return 1;
 		}
+		
 	}
-	else
-	{
-		printf("\nCodigo da moto n�o encontrado...");
-		return 0;
-	}
-	return 1;
+
+	
 }
 
 void qtdElementosLista(Lista *lista)
 {
-	int qtd_elementos = lista->id;
+	listaNo *p;
+	int contador;
 
 	if (lista == NULL)
 	{
-		printf("\nA lista n�o foi criada");
+		printf("\nA lista nao foi criada...");
 	}
-	if(qtd_elementos > 0)
-	{
-		printf("\nA lista tem atualmente %d elemento(s)", qtd_elementos);
+
+	for(p = lista->prim; p != NULL; p = p->prox){
+		contador +=1;
 	}
-	else
-	{
-		printf("A lista est� vazia...");
-	}
+
+	printf("\nA lista atualmente possui %d elementos", contador);
+	
 }
 
+/*
 int salvarDados(Lista* lista)
 {
 	int i;

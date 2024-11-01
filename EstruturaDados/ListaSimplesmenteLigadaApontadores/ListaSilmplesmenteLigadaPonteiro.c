@@ -1,7 +1,6 @@
 //Bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 #include <string.h>
 //Estruturas
 typedef struct ListaNo listaNo;
@@ -32,9 +31,8 @@ struct ListaNo
 
 //Declarando funções
 
-void limparBuffer();
 Lista *criarLista();
-void imprimirElementos(Lista *);
+int imprimirElementos(Lista *);
 int inserirElemento(Lista *, Motocicleta);
 int inserirElementoPosi(Lista *, Motocicleta, int);
 int inserirElementoInicio(Lista *, Motocicleta);
@@ -43,16 +41,13 @@ int removerElemento(Lista *, int);
 Lista * excluirLista(Lista*);
 int atualizarElementos(Lista*, Motocicleta, int);
 void qtdElementosLista(Lista *);
-//int salvarDados(Lista *);
-//int carregarDados(Lista *);
+int salvarDados(Lista *);
+int carregarDados(Lista *);
 
 
 //Função main
 int main ()
 {
-	setlocale(LC_ALL, "Portuguese");
-
-	char pulline = ' ';
 	int opc;
 	int cod_busca;
 	char continuar = 's';
@@ -230,12 +225,12 @@ int main ()
 
 		case 11:
 
-			//salvarDados(lista);
+			salvarDados(lista);
 			break;
 
 		case 12:
 
-			//carregarDados(lista);
+			carregarDados(lista);
 			break;
 
 		default:
@@ -271,35 +266,40 @@ Lista *criarLista()
 
 	return novaLista;
 }
-
-void imprimirElementos(Lista *lista)
+int imprimirElementos(Lista *lista)
 {
 	listaNo *p;
 
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada...");
+		return 0;
+
+	}
+
+	if(lista->prim == NULL){
+			
+		printf("\nLista vazia...");
+		return 0;
+
 	}
 
 	for(p = lista->prim; p != NULL; p = p->prox){
 		
-		if(lista->prim == NULL){
+		printf("\nCÓDIGO: %d", p->novaMoto.cod_moto);
+		printf("\nMARCA: %s",  p->novaMoto.marca);
+		printf("MODELO: %s", p->novaMoto.modelo);
+		printf("COR: %c", p->novaMoto.cor);
+		printf("\nCILINDRADA: %d", p->novaMoto.cilindrada);
+		printf("\nPARTIDA: %c", p->novaMoto.partida);
+		printf("\nALIMENTACAO: %c", p->novaMoto.alimentacao);
+		printf("\nCARGA: %.1f kg", p->novaMoto.capacidade_carga);
+		printf("\nPRECO: R$%.2f", p->novaMoto.preco);
+		printf("\n");
 			
-			printf("\nLista vazia...");
-		}else{
-			
-			printf("\nCÓDIGO: %d", p->novaMoto.cod_moto);
-			printf("\nMARCA: %s",  p->novaMoto.marca);
-			printf("MODELO: %s", p->novaMoto.modelo);
-			printf("COR: %c", p->novaMoto.cor);
-			printf("\nCILINDRADA: %d", p->novaMoto.cilindrada);
-			printf("\nPARTIDA: %c", p->novaMoto.partida);
-			printf("\nALIMENTACAO: %c", p->novaMoto.alimentacao);
-			printf("\nCARGA: %.1f kg", p->novaMoto.capacidade_carga);
-			printf("\nPRECO: R$%.2f", p->novaMoto.preco);
-			printf("\n");
-		}
 	}
+	
+	return 1;
 
 }
 
@@ -403,9 +403,11 @@ int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
 int buscarElemento(Lista *lista, int cod_busca)
 {
 	listaNo *p;
+	
 	if(lista == NULL)
 	{
 		printf("\nA lista não foi criada");
+		return 0;
 	}
 
 	for(p = lista->prim; p != NULL; p = p->prox)
@@ -447,7 +449,7 @@ int removerElemento(Lista *lista, int cod_busca)
 
 	if(lista == NULL)
 	{
-		printf("\nA lista nao foi criada\n");
+		printf("\nA lista nao foi criada...");
 		return 0;
 	}
 
@@ -483,7 +485,7 @@ int removerElemento(Lista *lista, int cod_busca)
 	return 0;
 }
 
-//
+
 Lista *excluirLista(Lista *lista)
 {
 
@@ -516,7 +518,7 @@ int atualizarElementos(Lista *lista,  Motocicleta novaMoto, int cod_busca)
 
 	if (lista == NULL)
 	{
-		printf("\nA lista não foi criada");
+		printf("\nA lista não foi criada...");
 		return 0;
 	}
 
@@ -559,39 +561,40 @@ void qtdElementosLista(Lista *lista)
 	
 }
 
-/*
+
 int salvarDados(Lista* lista)
 {
-	int i;
+	listaNo *p;
 
 	if(lista == NULL)
 	{
-		printf("\nA lista n�o foi criada");
+		printf("\nA lista nao foi criada...");
 		return 0;
 	}
 
-	FILE * arquivo = fopen("RegistroMotos.txt", "w");
+	FILE *arquivo = fopen("RegistroMotos.txt", "w");
 
 
 	if(arquivo == NULL)
 	{
-		printf("Erro ao abrir o aquivo");
+		printf("Erro ao abrir o aquivo...");
 		return 0;
 	}
 
-	for(i = 0; i < lista->id; ++i)
+	for(p = lista->prim; p != NULL; p = p->prox)
 	{
-		fprintf(arquivo, "\nMOTO %d", i + 1);
-		fprintf(arquivo, "\nC�DIGO:%d", lista->elementos[i].cod_moto);
-		fprintf(arquivo, "\nMARCA: %s", lista->elementos[i].marca);
-		fprintf(arquivo, "MODELO: %s", lista->elementos[i].modelo);
-		fprintf(arquivo, "COR: %c", lista->elementos[i].cor);
-		fprintf(arquivo, "\nCILINDRADA: %d", lista->elementos[i].cilindrada);
-		fprintf(arquivo, "\nPARTIDA: %c", lista->elementos[i].partida);
-		fprintf(arquivo, "\nALIMENTA��O: %c", lista->elementos[i].alimentacao);
-		fprintf(arquivo, "\nCARGA: %.1f KG", lista->elementos[i].capacidade_carga);
-		fprintf(arquivo, "\nPRE�O: R$ %.2f", lista->elementos[i].preco);
+		fprintf(arquivo, "\nCODIGO:%d", p->novaMoto.cod_moto);
+		fprintf(arquivo, "\nMARCA: %s", p->novaMoto.marca);
+		fprintf(arquivo, "MODELO: %s", p->novaMoto.modelo);
+		fprintf(arquivo, "COR: %c", p->novaMoto.cor);
+		fprintf(arquivo, "\nCILINDRADA: %d", p->novaMoto.cilindrada);
+		fprintf(arquivo, "\nPARTIDA: %c", p->novaMoto.partida);
+		fprintf(arquivo, "\nALIMENTACAO: %c", p->novaMoto.alimentacao);
+		fprintf(arquivo, "\nCARGA: %.1f KG", p->novaMoto.capacidade_carga);
+		fprintf(arquivo, "\nPRECO: R$ %.2f\n\n", p->novaMoto.preco);
+
 	}
+	
 	fclose(arquivo);
 
 	printf("\nDados salvos com sucesso...");
@@ -619,6 +622,6 @@ int carregarDados(Lista *lista)
 	fclose(arquivo);
 	printf("\n\nDados carregados com sucesso...");
 	return 1;
-}*/
+}
 
 

@@ -40,7 +40,7 @@ int buscarElemento(Lista *, int);
 int removerElemento(Lista *, int);
 Lista * excluirLista(Lista*);
 int atualizarElementos(Lista*, Motocicleta, int);
-void qtdElementosLista(Lista *);
+int qtdElementosLista(Lista *);
 int salvarDados(Lista *);
 int carregarDados(Lista *);
 
@@ -113,7 +113,7 @@ int main ()
 
 		case 3 :
 
-			printf("\nInsira o código: ");
+			printf("\nInsira o codigo: ");
 			scanf(" %d", &novaMoto.cod_moto);
 			getchar();
 			printf("\nInsira a marca: ");
@@ -126,11 +126,11 @@ int main ()
 			scanf("%d", &novaMoto.cilindrada);
 			printf("\nInsira o partida: ");
 			scanf(" %c", &novaMoto.partida);
-			printf("\nInsira o alimentação: ");
+			printf("\nInsira o alimentacao: ");
 			scanf(" %c", &novaMoto.alimentacao);
 			printf("\nInsira o carga: ");
 			scanf("%f", &novaMoto.capacidade_carga);
-			printf("\nInsira o preço: ");
+			printf("\nInsira o preco: ");
 			scanf("%f", &novaMoto.preco);
 			printf("\n\n");
 			printf("Informe o código da moto que deseja inserir a nova moto: ");
@@ -141,7 +141,7 @@ int main ()
 
 		case 4:
 
-			printf("\nInsira o código: ");
+			printf("\nInsira o codigo: ");
 			scanf(" %d", &novaMoto.cod_moto);
 			getchar();
 			printf("\nInsira a marca: ");
@@ -154,11 +154,11 @@ int main ()
 			scanf("%d", &novaMoto.cilindrada);
 			printf("\nInsira o partida: ");
 			scanf(" %c", &novaMoto.partida);
-			printf("\nInsira o alimenta��o: ");
+			printf("\nInsira o alimentacao: ");
 			scanf(" %c", &novaMoto.alimentacao);
 			printf("\nInsira o carga: ");
 			scanf("%f", &novaMoto.capacidade_carga);
-			printf("\nInsira o preço: ");
+			printf("\nInsira o preco: ");
 			scanf("%f", &novaMoto.preco);
 
 			inserirElementoInicio(lista, novaMoto);
@@ -180,7 +180,7 @@ int main ()
 		case 7:
 
 			
-			printf("\nInsira o código da moto para remover: ");
+			printf("\nInsira o codigo da moto que deseja remover: ");
 			scanf(" %d", &cod_busca);
 			removerElemento(lista, cod_busca);
 			break;
@@ -195,7 +195,7 @@ int main ()
 			
 			printf("\nInsira o código da moto que deseja atualizar: ");
 			scanf(" %d", &cod_busca);
-			printf("\nInsira o código: ");
+			printf("\nInsira o codigo: ");
 			scanf(" %d", &novaMoto.cod_moto);
 			getchar();
 			printf("\nInsira a marca: ");
@@ -208,11 +208,11 @@ int main ()
 			scanf("%d", &novaMoto.cilindrada);
 			printf("\nInsira o partida: ");
 			scanf(" %c", &novaMoto.partida);
-			printf("\nInsira o alimentação: ");
+			printf("\nInsira o alimentacao: ");
 			scanf(" %c", &novaMoto.alimentacao);
 			printf("\nInsira o carga: ");
 			scanf("%f", &novaMoto.capacidade_carga);
-			printf("\nInsira o preço: ");
+			printf("\nInsira o preco: ");
 			scanf("%f", &novaMoto.preco);
 
 			atualizarElementos(lista, novaMoto, cod_busca);
@@ -235,7 +235,7 @@ int main ()
 
 		default:
 
-			printf("\nOpção inválida");
+			printf("\nOpcao invalida");
 			break;
 		}
 
@@ -260,7 +260,7 @@ Lista *criarLista()
 
 	if(novaLista == NULL)
 	{
-		printf("Erro na alocacao de memoria");
+		printf("\nErro na alocacao de memoria...");
 		return NULL;
 	}
 
@@ -286,7 +286,7 @@ int imprimirElementos(Lista *lista)
 
 	for(p = lista->prim; p != NULL; p = p->prox){
 		
-		printf("\nCÓDIGO: %d", p->novaMoto.cod_moto);
+		printf("\nCODIGO: %d", p->novaMoto.cod_moto);
 		printf("\nMARCA: %s",  p->novaMoto.marca);
 		printf("MODELO: %s", p->novaMoto.modelo);
 		printf("COR: %c", p->novaMoto.cor);
@@ -337,7 +337,7 @@ int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int cod_busca)
 	listaNo *novoEspaco = (listaNo*)malloc(sizeof(listaNo));
 
 	if(lista == NULL){
-		printf("\nA lista nao foi criada...\n");
+		printf("\nA lista nao foi criada...");
 		return 0;
 	}
 
@@ -380,7 +380,7 @@ int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
 
 	if(lista == NULL)
 	{
-		printf("\nA lista nao foi criada...\n");
+		printf("\nA lista nao foi criada...");
 		return 0;
 	}
 
@@ -406,7 +406,7 @@ int buscarElemento(Lista *lista, int cod_busca)
 	
 	if(lista == NULL)
 	{
-		printf("\nA lista não foi criada");
+		printf("\nA lista nao foi criada...");
 		return 0;
 	}
 
@@ -421,22 +421,22 @@ int buscarElemento(Lista *lista, int cod_busca)
 			
 			if(cod_busca == p->novaMoto.cod_moto){
 			
-				printf("\nCÓDIGO: %d", p->novaMoto.cod_moto);
+				printf("\nCODIGO: %d", p->novaMoto.cod_moto);
 				printf("\nMARCA: %s",  p->novaMoto.marca);
 				printf("MODELO: %s", p->novaMoto.modelo);
 				printf("COR: %c", p->novaMoto.cor);
 				printf("\nCILINDRADA: %d", p->novaMoto.cilindrada);
 				printf("\nPARTIDA: %c", p->novaMoto.partida);
-				printf("\nALIMENTAO: %c", p->novaMoto.alimentacao);
+				printf("\nALIMENTACAO: %c", p->novaMoto.alimentacao);
 				printf("\nCARGA: %.1f kg", p->novaMoto.capacidade_carga);
-				printf("\nPREÇO: R$%.2f", p->novaMoto.preco);
+				printf("\nPRECO: R$%.2f", p->novaMoto.preco);
 				printf("\n");
 				return 1;
 			}
 		}
 	}
 
-	printf("\nCódigo da moto não encontrado...");
+	printf("\nCodigo da moto nao encontrado...");
 	return 0;
 }
 
@@ -481,7 +481,7 @@ int removerElemento(Lista *lista, int cod_busca)
 		
 	}
 	
-	printf("\nCódigo da moto não encontrado...");
+	printf("\nCodigo da moto nao encontrado...");
 	return 0;
 }
 
@@ -543,7 +543,7 @@ int atualizarElementos(Lista *lista,  Motocicleta novaMoto, int cod_busca)
 	return 0;
 }
 
-void qtdElementosLista(Lista *lista)
+int qtdElementosLista(Lista *lista)
 {
 	listaNo *p;
 	int contador;
@@ -551,6 +551,7 @@ void qtdElementosLista(Lista *lista)
 	if (lista == NULL)
 	{
 		printf("\nA lista nao foi criada...");
+		return 0;
 	}
 
 	for(p = lista->prim; p != NULL; p = p->prox){
@@ -558,7 +559,7 @@ void qtdElementosLista(Lista *lista)
 	}
 
 	printf("\nA lista atualmente possui %d elementos", contador);
-	
+	return 1;
 }
 
 
@@ -583,7 +584,7 @@ int salvarDados(Lista* lista)
 
 	for(p = lista->prim; p != NULL; p = p->prox)
 	{
-		fprintf(arquivo, "\nCODIGO:%d", p->novaMoto.cod_moto);
+		fprintf(arquivo, "\nCODIGO: %d", p->novaMoto.cod_moto);
 		fprintf(arquivo, "\nMARCA: %s", p->novaMoto.marca);
 		fprintf(arquivo, "MODELO: %s", p->novaMoto.modelo);
 		fprintf(arquivo, "COR: %c", p->novaMoto.cor);

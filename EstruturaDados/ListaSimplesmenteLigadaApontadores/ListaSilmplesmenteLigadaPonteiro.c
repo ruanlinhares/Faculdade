@@ -30,7 +30,6 @@ struct ListaNo
 };
 
 //Declarando funções
-
 Lista *criarLista();
 int imprimirElementos(Lista *);
 int inserirElemento(Lista *, Motocicleta);
@@ -254,29 +253,40 @@ int main ()
 }
 
 //Funções
+
+/*FUNÇÃO CRIAR LISTA - função feita para criar um espaço na memória para
+armazenar os elemntos criados*/
 Lista *criarLista()
 {
+	//Reserva espaço para um ponteiro do tipo lista;
 	Lista *novaLista = (Lista*)malloc(sizeof(Lista));
 
+	//Verifica se a lista existe;
 	if(novaLista == NULL)
 	{
 		printf("\nErro na alocacao de memoria...");
 		return NULL;
 	}
 
+	//Caso existir retorna o valor da nova lista e a armazena na variavel lista;
 	return novaLista;
 }
+
+/*FUNÇÃO IMORIMIR ELEMENTOS - função implementada para percorrer os componentes
+da lista e exibir os elementos*/
 int imprimirElementos(Lista *lista)
 {
+	//Ponteiro criado para acessar a posição do elemento durante o loop;
 	listaNo *p;
 
+	//Verifica se a lista existe;
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada...");
 		return 0;
 
 	}
-
+	//Verifica se a lista possui algum elemento;
 	if(lista->prim == NULL){
 			
 		printf("\nLista vazia...");
@@ -284,6 +294,8 @@ int imprimirElementos(Lista *lista)
 
 	}
 
+	/*Loop que acessa a posição atual de cada elemento e exibe o
+	valor desse elemento*/
 	for(p = lista->prim; p != NULL; p = p->prox){
 		
 		printf("\nCODIGO: %d", p->novaMoto.cod_moto);
@@ -303,66 +315,94 @@ int imprimirElementos(Lista *lista)
 
 }
 
+/*FUNÇÃO INSERIR ELEMENTO - função implementada para adicionar elementos a lista
+utilizando o sistema de ponteiros, onde cada elemento terá um ponteiro que apontará
+para o próximo elemento*/
 int inserirElemento(Lista *lista, Motocicleta novaMoto)
 {
+	//Ponteiro criado para acessar a posição do elemento durante o loop;
 	listaNo *p;
+	//Criando espaço para armazenar o novo elemento e seu ponteiro, espaço do tamanho listaNo;
 	listaNo *novoEspaco = (listaNo*)malloc(sizeof(listaNo));
 
+	//Verifica se a lista foi criada;
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada...\n");
 		return 0;
 	}
 
+	//Atribui o valor inserido para o novo elemento e faz ele apontar para NULL;
 	novoEspaco->novaMoto = novaMoto;
 	novoEspaco->prox = NULL;
 
+	//Verifica se existe algum elemento na lista;
 	if(lista->prim == NULL)
 	{
+		//Caso não, adiciona um elemento ao inicio da lista;
 		lista->prim = novoEspaco;
 		return 1;
 	}
 
+	//Loop percorre a lista procurando um elemento que aponte para NULL(no caso o último elemento);
 	for(p = lista->prim; p->prox != NULL ; p = p->prox);
 
+	//Faz elemento deixar de aponta para NULL e passar a apontar para o novo elemento;
 	p->prox = novoEspaco;
 
 	return 1;
 }
 
+/*FUNÇÃO INSERIR ELEMENTO POSIÇÃO - função implementada para inserir um elemento em uma posição
+indicada pelo o usuário, a posição é indicada pelo código de registro da moto, o novo elemento
+aponta para o elemento de código escolhido e faz o elemento anterior ao do código escolhido apontar
+para o novo elemento ex: [ElemAterior]->[NovoElemen]->[ElemSelecionado]*/
 int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int cod_busca)
 {
+	//Ponteiro criado para acessar a posição do elemento durante o loop;
 	listaNo *p;
+	//Ponteiro criado para acessar uma posição anterior de *p durante o loop;
 	listaNo *espacoAnterior;
+	//Criando espaço para armazenar o novo elemento e seu ponteiro, espaço do tamanho listaNo;
 	listaNo *novoEspaco = (listaNo*)malloc(sizeof(listaNo));
 
+	//Verifica se a lista foi criada;
 	if(lista == NULL){
 		printf("\nA lista nao foi criada...");
 		return 0;
 	}
 
+	//Atribui o valor inserido para o novo elemento e faz ele apontar para NULL;
 	novoEspaco->novaMoto = novaMoto;
 	novoEspaco->prox = NULL;
 
+	//Verifica se existe algum elemento na lista;
 	if(lista->prim == NULL){
+		//Caso não, adiciona um elemento ao inicio da lista;
 		lista->prim = novoEspaco;
 		return 1;
 	}
 
+	//Verifica se o código digitado é igual ao primeiro elemento da lista;
 	if(lista->prim->novaMoto.cod_moto == cod_busca){
 		
+		//Se sim faz novo elemento apontar para o primeiro elemento;
 		novoEspaco->prox = lista->prim;
+		//depois sobrescreve o primeiro elemento pelo novo elemento;
 		lista->prim = novoEspaco;
 		
 		return 1;
 	}
 
+	//Loop percorre a lista procurando um elemento que seja NULL;
+	// obs:criei dois incrementos um com a posição atual de p e um com a posição anterior de p;
 	for(p = lista->prim; p != NULL; espacoAnterior = p , p = p->prox){
 				
-			
+		//verifica se o elemento digitado é igual a os elementos percorridos;
 		if(cod_busca == p->novaMoto.cod_moto){
-			
+			//se sim faz o novo elemento apontar para o elemento atual;
 			novoEspaco->prox = p;
+			//Faz o elemento anterior a p apontar para o novo elemento;
 			espacoAnterior->prox = novoEspaco;
 			
 			return 1;
@@ -373,52 +413,70 @@ int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int cod_busca)
 	return 0;
 }
 
+/*FUNÇÃO INSERIR ELEMENTO inicio - função implementada para inserir um elemento no inicio da lista*/
 int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
 {
+	//Ponteiro criado para acessar a posição do elemento;
 	listaNo *p;
+	//Ponteiro criado para acessar uma posição anterior de *p durante o loop;
 	listaNo *novoEspaco = (listaNo*)malloc(sizeof(listaNo));
 
+	//Verifica se a lista foi criada;
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada...");
 		return 0;
 	}
 
+	//Atribui o valor inserido para o novo elemento e faz ele apontar para NULL;
 	novoEspaco->novaMoto = novaMoto;
 	novoEspaco->prox = NULL;
 
+	//Verifica se existe algum elemento na lista;
 	if(lista->prim == NULL)
 	{
+		//Caso não, adiciona um elemento ao inicio da lista;
 		lista->prim = novoEspaco;
 		return 1;
 	}
 
+	//p guarda o nosso antifo primeiro elemento;
  	p = lista->prim;
+	//lista->prim aponta para o novo elemento;
  	lista->prim = novoEspaco;
+	//guardamos p no prox de lista->prim que agora é o novo elemento;
+	//fazendo o novo elemento apontar para o antigo;
  	lista->prim->prox = p;
 
 	return 1;
 }
 
+/*FUNÇÃO BUSCAR ELEMENTO - função implementada para localizar um elemento pelo seu código
+e exibi-lo*/
+
 int buscarElemento(Lista *lista, int cod_busca)
 {
+	//Ponteiro criado para acessar a posição do elemento durante o loop;
 	listaNo *p;
 	
+	//Verifica se a lista foi criada;
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada...");
 		return 0;
 	}
 
+	//Loop percorre a lista procurando um elemento que seja NULL;
 	for(p = lista->prim; p != NULL; p = p->prox)
 	{
+		//Verifica se a lista está vazia;
 		if(lista->prim == NULL){
 			
-			printf("\nLista vazia");
+			printf("\nLista vazia...");
 			return 0;
 
 		}else{
-			
+			//Verifica se o código digitado pertence a algum elemento exitente na lista;
 			if(cod_busca == p->novaMoto.cod_moto){
 			
 				printf("\nCODIGO: %d", p->novaMoto.cod_moto);
@@ -436,44 +494,60 @@ int buscarElemento(Lista *lista, int cod_busca)
 		}
 	}
 
+	//Se o código não foi encontrado é exibida essa mensagem;
 	printf("\nCodigo da moto nao encontrado...");
 	return 0;
 }
 
-
+/*FUNÇÃO REMOVER ELEMENTO - função implementada para remover um elemento em qualquer posição
+indicada pelo seu código*/
 int removerElemento(Lista *lista, int cod_busca)
 {
+	//Ponteiro criado para acessar a posição do elemento durante o loop;
 	listaNo *p;
+	//Ponteiro criado para acessar uma posição anterior de *p durante o loop;
 	listaNo *espacoAnterior;
+	//ponteiro criado para armazenar um valor para liberar seu espaço de memoria;
 	listaNo *ref;
 
+	//Verifica se a lista foi criada;
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada...");
 		return 0;
 	}
 
+	//verifica se a lista está vazia;
 	if(lista->prim == NULL){
 		
+		printf("\nA lista está vazia...");
 		return 1;
 	}
 
+	//verifica se o elemento procurado está na primeira posição para remove-lo
 	if(lista->prim->novaMoto.cod_moto == cod_busca){
-
+		//guarda o elemento em ref;
 		ref = lista->prim;
+		//faz lista->prim apontar para o elemento seguinte do lista->prim anterior;
 		lista->prim = lista->prim->prox;
+		//libera o antigo valor de lista->prim;
 		free(ref);
 		
 		return 1;
 	}
 
+	//percorre todos os elementos da lista;
+	//pegamos o elemento atual e a posição do elemento anterior a ele; 
 	for(p = lista->prim; p != NULL; espacoAnterior = p , p = p->prox){
 				
-			
+		//verifica se o elemnto buscado existe na lista	
 		if(cod_busca == p->novaMoto.cod_moto){
 
+			//guarda a referencia do elemento atual;
 			ref = p;
+			//faz o elemento anterior ao atual apontar para o elemento depois do atual;
 			espacoAnterior->prox = p->prox;
+			//libera o espaço do elemento atual;
 			free(ref);
 
 			return 1;
@@ -481,58 +555,72 @@ int removerElemento(Lista *lista, int cod_busca)
 		
 	}
 	
+	//se o elemento não exitir essa mesagem é exbida;
 	printf("\nCodigo da moto nao encontrado...");
 	return 0;
 }
 
-
+/*FUNÇÃO EXCLUIR LISTA - função percorre a lista liberando espaço na de cada elemento
+depois libera o espaço da própria lista */
 Lista *excluirLista(Lista *lista)
 {
-
+	//Ponteiro criado para acessar a posição do elemento durante o loop;
 	listaNo *p;
+	//ponteiro criado para armazenar um valor para liberar seu espaço na memoria;
 	listaNo *ref;
-	char escolha;
 
+	//verifica se a lista existe;
 	if(lista == NULL)
 	{
 		printf("\nA lista nunca existiu...");
 		return NULL;
 	}
-		
+
+	//percorre todos os elementos da lista;	
 	for(p = lista->prim; p != NULL; p = p->prox){
+		//guarda p em ref
 		ref = p;
+		//libera da memoria o conteudo de ref;
 		free(ref);
 	}
-
+	
+	//libera o espaço da lista
 	free(lista);
 
+	//informa que todo o espaço foi liberodo excluindo a lista;
 	printf("\nLista de Motos excluida com sucesso...");
 
 	return NULL;
 
 }
 
+
+/*FUNCÃO ATUALIZAR ELEMETOS - função implementada para atualizar o conteudo de um elemento*/
 int atualizarElementos(Lista *lista,  Motocicleta novaMoto, int cod_busca)
 {
+	//Ponteiro criado para acessar a posição do elemento durante o loop;
 	listaNo *p;
 
+	//verifica se a lista foi criada;
 	if (lista == NULL)
 	{
 		printf("\nA lista não foi criada...");
 		return 0;
 	}
 
+	//verifica se o elemento buscado está na primeira posição;
 	if(lista->prim->novaMoto.cod_moto == cod_busca){
-		
+		//sobrescreve o valor antigo pelo novo valor;
 		lista->prim->novaMoto = novaMoto;
 		return 1;
 	}
 	
+	//percorre os elementos da lista;
 	for(p = lista->prim; p != NULL; p = p->prox){
 				
-			
+		//verifica se o elemento digitado existe na lista;
 		if(cod_busca == p->novaMoto.cod_moto){
-			
+			//se existir atualiza o valor do elemento atual pelo novo valor;
 			p->novaMoto = novaMoto;
 			
 			return 1;
@@ -540,21 +628,30 @@ int atualizarElementos(Lista *lista,  Motocicleta novaMoto, int cod_busca)
 		
 	}
 
+	//caso nao encotre o código da moto essa mensagem é exibida;
+	printf("\nCodigo da moto nao encontrado...");
 	return 0;
 }
 
+/*FUNÇÃO QUANTIDADE DE ELEMENTOS - função implementada para contar a 
+de elementos da lista*/
 int qtdElementosLista(Lista *lista)
 {
+	//Ponteiro criado para acessar a posição do elemento durante o loop;
 	listaNo *p;
+	//contador criado para armazenar a quantidade de elementos;
 	int contador;
 
+	//verifica se a lista foi criada;
 	if (lista == NULL)
 	{
 		printf("\nA lista nao foi criada...");
 		return 0;
 	}
 
+	//loop que percorre os elementos da lista;
 	for(p = lista->prim; p != NULL; p = p->prox){
+		//cada vez que o loop rodar para achar um elemento o contador soma 1 a quantidade;
 		contador +=1;
 	}
 
@@ -562,28 +659,34 @@ int qtdElementosLista(Lista *lista)
 	return 1;
 }
 
-
+/*FUNÇÃO SALVAR DADOS - função implementada para salvar os registros
+de elemntos que estavam na memoria em um arquivo txt*/
 int salvarDados(Lista* lista)
 {
+	//Ponteiro criado para acessar a posição do elemento durante o loop;
 	listaNo *p;
 
+	//verifica se a lista foi criada;
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada...");
 		return 0;
 	}
 
+	//abre um arquivo txt para escrita;
 	FILE *arquivo = fopen("RegistroMotos.txt", "w");
 
-
+	//verifica se o arquivo foi criado;
 	if(arquivo == NULL)
 	{
 		printf("Erro ao abrir o aquivo...");
 		return 0;
 	}
 
+	//percorre todos os elementos da lista;
 	for(p = lista->prim; p != NULL; p = p->prox)
 	{
+		//usamos fprinf para gravar cada informação do valor do elemento atual;
 		fprintf(arquivo, "\nCODIGO: %d", p->novaMoto.cod_moto);
 		fprintf(arquivo, "\nMARCA: %s", p->novaMoto.marca);
 		fprintf(arquivo, "MODELO: %s", p->novaMoto.modelo);
@@ -596,31 +699,41 @@ int salvarDados(Lista* lista)
 
 	}
 	
+	//fecha o arquivo salvando as informações;
 	fclose(arquivo);
-
+	
+	//mensagem de sucesso;
 	printf("\nDados salvos com sucesso...");
 	return 1;
 }
 
+/*FUNÇÃO CARREGAR DADOS - funçãoi implementada para carregar os registros de elementos
+que foram gravados em um arquivo e exibir*/
 int carregarDados(Lista *lista)
 {
 
+	//abre um aquivo txt no formato de leitura;
 	FILE * arquivo = fopen("RegistroMotos.txt", "r");
 
+	//verifica se o aquivo foi criado/aberto;
 	if(arquivo == NULL)
 	{
 		printf("\nErro ao abrir o arquivo...");
 		return 0;
 	}
 
-
+	//variavel que armazena cada linha do arquivo;
 	char registro[100];
+	//loop para percorrer cada linha do arquivo até que seja NULL;
 	while(fgets(registro, 100, arquivo) != NULL)
 	{
+		//imprime na tela cada linha do arquivo;
 		printf("%s", registro);
 	}
-
+	
+	//fecha o arquivo salvando as informações;
 	fclose(arquivo);
+	//mensagem de sucesso;
 	printf("\n\nDados carregados com sucesso...");
 	return 1;
 }

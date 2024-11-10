@@ -39,12 +39,12 @@ int inserirElemento(Lista *, Motocicleta);
 int inserirElementoPosi(Lista *, Motocicleta, int);
 int inserirElementoInicio(Lista *, Motocicleta);
 int buscarElemento(Lista *, int);
-//int removerElemento(Lista *, int);
-//Lista * excluirLista(Lista*);
-//int atualizarElementos(Lista*, Motocicleta, int);
+int removerElemento(Lista *, int);
+Lista * excluirLista(Lista*);
+int atualizarElementos(Lista*, Motocicleta, int);
 int qtdElementosLista(Lista *);
-//int salvarDados(Lista *);
-//int carregarDados(Lista *);
+int salvarDados(Lista *);
+int carregarDados(Lista *);
 int inverterLista(Lista *);
 
 
@@ -185,12 +185,12 @@ int main ()
 			
 			printf("\nInsira o codigo da moto que deseja remover: ");
 			scanf(" %d", &cod_busca);
-			//removerElemento(lista, cod_busca);
+			removerElemento(lista, cod_busca);
 			break;
 
 		case 8:
 
-			//lista = excluirLista(lista);
+			lista = excluirLista(lista);
 			break;
 
 		case 9:
@@ -218,7 +218,7 @@ int main ()
 			printf("\nInsira o preco: ");
 			scanf("%f", &novaMoto.preco);
 
-			//atualizarElementos(lista, novaMoto, cod_busca);
+			atualizarElementos(lista, novaMoto, cod_busca);
 			break;
 
 		case 10:
@@ -228,12 +228,12 @@ int main ()
 
 		case 11:
 
-			//salvarDados(lista);
+			salvarDados(lista);
 			break;
 
 		case 12:
 
-			//carregarDados(lista);
+			carregarDados(lista);
 			break;
 		
 		case 13:
@@ -361,7 +361,7 @@ int inserirElemento(Lista *lista, Motocicleta novaMoto)
 	//Faz elemento deixar de aponta para NULL e passar a apontar para o novo elemento;
 	p->prox = novoEspaco;
 	novoEspaco->ant = p;
-	
+	// faz lista ult apontar para cada ultimo elemnto adicionado;
 	lista->ult = novoEspaco;
 
 	return 1;
@@ -375,6 +375,7 @@ int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int cod_busca)
 {
 	//Ponteiro criado para acessar a posição do elemento durante o loop;
 	listaNo *p;
+	listaNo* aux;
 	//Ponteiro criado para acessar uma posição anterior de *p durante o loop;
 	listaNo *espacoAnterior;
 	//Criando espaço para armazenar o novo elemento e seu ponteiro, espaço do tamanho listaNo;
@@ -403,12 +404,11 @@ int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int cod_busca)
 	if(lista->prim->novaMoto.cod_moto == cod_busca){
 		
 		//Se sim faz novo elemento apontar para o primeiro elemento;
-		novoEspaco->prox = lista->prim;
+		aux = lista->prim;
+		novoEspaco->prox = aux;
 		//depois sobrescreve o primeiro elemento pelo novo elemento;
 		lista->prim = novoEspaco;
-		//
-		lista->ult = lista->prim;
-		
+		aux->ant = novoEspaco;
 		return 1;
 	}
 
@@ -424,9 +424,6 @@ int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int cod_busca)
 			//Faz o elemento anterior a p apontar para o novo elemento;
 			espacoAnterior->prox = novoEspaco;
 			novoEspaco->ant = espacoAnterior;
-
-			lista->ult = p;
-				
 		}
 	}
 
@@ -438,6 +435,8 @@ int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
 {
 	//Ponteiro criado para acessar a posição do elemento;
 	listaNo *p;
+	//variavel auxiliar para realizar operações;
+	listaNo *aux;
 	//Ponteiro criado para acessar uma posição anterior de *p durante o loop;
 	listaNo *novoEspaco = (listaNo*)malloc(sizeof(listaNo));
 
@@ -456,21 +455,24 @@ int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
 	//Verifica se existe algum elemento na lista;
 	if(lista->prim == NULL)
 	{
-		//Caso não, adiciona um elemento ao inicio da lista;
+		//Caso não, adiciona um elemento ao inicio da lista e define ele como ultimo elemento tambem;
 		lista->prim = novoEspaco;
 		lista->ult = novoEspaco;
 		return 1;
 	}
 
 	//p guarda o nosso antigo primeiro elemento;
- 	p = lista->prim;
+ 	aux = lista->prim;
 	//lista->prim aponta para o novo elemento;
  	lista->prim = novoEspaco;
 	//guardamos p no prox de lista->prim que agora é o novo elemento;
-	//fazendo o novo elemento apontar para o antigo;
- 	lista->prim->prox = p;
- 	p->ant = lista->prim;
+ 	lista->prim->prox = aux;
+	//fazendo o elemento antigo apontar para o novo elemento;
+ 	aux->ant = lista->prim;
+	//percorre a lista para achar o ultimo elemento e fazer lista ult a pontar para ele;
+	for(p = lista->prim; p->prox != NULL ; p = p->prox);
 
+	lista->ult = p;
 	return 1;
 }
 
@@ -528,6 +530,7 @@ int removerElemento(Lista *lista, int cod_busca)
 {
 	//Ponteiro criado para acessar a posição do elemento durante o loop;
 	listaNo *p;
+	listaNo* j;
 	//Ponteiro criado para acessar uma posição anterior de *p durante o loop;
 	listaNo *espacoAnterior;
 	//ponteiro criado para armazenar um valor para liberar seu espaço de memoria;
@@ -570,14 +573,14 @@ int removerElemento(Lista *lista, int cod_busca)
 			ref = p;
 			//faz o elemento anterior ao atual apontar para o elemento depois do atual;
 			espacoAnterior->prox = p->prox;
+			p->prox->ant = espacoAnterior;
 			//libera o espaço do elemento atual;
-			free(ref);
-
+			free(ref);	
 			return 1;
 		}
 		
 	}
-	
+
 	//se o elemento não exitir essa mesagem é exbida;
 	printf("\nCodigo da moto nao encontrado...");
 	return 0;
@@ -608,6 +611,7 @@ Lista *excluirLista(Lista *lista)
 	}
 	
 	//libera o espaço da lista
+	free(lista->ult);
 	free(lista);
 
 	//informa que todo o espaço foi liberodo excluindo a lista;
@@ -785,6 +789,7 @@ int inverterLista(Lista *lista){
 	/*Loop que acessa a posição atual de cada elemento e exibe o
 	valor desse elemento*/
 	//nao considera o elemeto que é == a lista->prim;
+	
 	for(p = lista->ult; p != NULL; p = p->ant){
 		
 		printf("\nCODIGO: %d", p->novaMoto.cod_moto);
@@ -797,7 +802,8 @@ int inverterLista(Lista *lista){
 		printf("\nCARGA: %.1f kg", p->novaMoto.capacidade_carga);
 		printf("\nPRECO: R$%.2f", p->novaMoto.preco);
 		printf("\n");
+
 	}
-	
+
 	return 1;
 }

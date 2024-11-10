@@ -36,13 +36,13 @@ struct ListaNo
 Lista *criarLista();
 int imprimirElementos(Lista *);
 int inserirElemento(Lista *, Motocicleta);
-//int inserirElementoPosi(Lista *, Motocicleta, int);
+int inserirElementoPosi(Lista *, Motocicleta, int);
 int inserirElementoInicio(Lista *, Motocicleta);
-//int buscarElemento(Lista *, int);
+int buscarElemento(Lista *, int);
 //int removerElemento(Lista *, int);
 //Lista * excluirLista(Lista*);
 //int atualizarElementos(Lista*, Motocicleta, int);
-//int qtdElementosLista(Lista *);
+int qtdElementosLista(Lista *);
 //int salvarDados(Lista *);
 //int carregarDados(Lista *);
 int inverterLista(Lista *);
@@ -74,7 +74,7 @@ int main ()
 		printf("\n10 - Quantidade de motos registradas");
 		printf("\n11 - Salvar dados do programa");
 		printf("\n12 - carregar dados exitentes");
-
+		printf("\n13 - Inverter Lista");
 
 
 		printf("\n");
@@ -139,7 +139,7 @@ int main ()
 			printf("Informe o código da moto que deseja inserir a nova moto: ");
 			scanf("%d", &cod_busca);
 
-			//inserirElementoPosi(lista, novaMoto, cod_busca);
+			inserirElementoPosi(lista, novaMoto, cod_busca);
 			break;
 
 		case 4:
@@ -177,7 +177,7 @@ int main ()
 			
 			printf("\nDigite o codigo da moto: ");
 			scanf(" %d", &cod_busca);
-			//buscarElemento(lista, cod_busca);
+			buscarElemento(lista, cod_busca);
 			break;
 
 		case 7:
@@ -223,7 +223,7 @@ int main ()
 
 		case 10:
 
-			//qtdElementosLista(lista);
+			qtdElementosLista(lista);
 			break;
 
 		case 11:
@@ -386,14 +386,16 @@ int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int cod_busca)
 		return 0;
 	}
 
-	//Atribui o valor inserido para o novo elemento e faz ele apontar para NULL;
+	//Atribui a informação das structs e seus ponteiros;
 	novoEspaco->novaMoto = novaMoto;
 	novoEspaco->prox = NULL;
+	novoEspaco->ant = NULL;
 
 	//Verifica se existe algum elemento na lista;
 	if(lista->prim == NULL){
 		//Caso não, adiciona um elemento ao inicio da lista;
 		lista->prim = novoEspaco;
+		lista->ult = novoEspaco;
 		return 1;
 	}
 
@@ -404,27 +406,31 @@ int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int cod_busca)
 		novoEspaco->prox = lista->prim;
 		//depois sobrescreve o primeiro elemento pelo novo elemento;
 		lista->prim = novoEspaco;
+		//
+		lista->ult = lista->prim;
 		
 		return 1;
 	}
 
 	//Loop percorre a lista procurando um elemento que seja NULL;
-	// obs:criei dois incrementos um com a posição atual de p e um com a posição anterior de p;
+
 	for(p = lista->prim; p != NULL; espacoAnterior = p , p = p->prox){
 				
 		//verifica se o elemento digitado é igual a os elementos percorridos;
 		if(cod_busca == p->novaMoto.cod_moto){
 			//se sim faz o novo elemento apontar para o elemento atual;
 			novoEspaco->prox = p;
+			p->ant = novoEspaco;
 			//Faz o elemento anterior a p apontar para o novo elemento;
 			espacoAnterior->prox = novoEspaco;
-			
-			return 1;
+			novoEspaco->ant = espacoAnterior;
+
+			lista->ult = p;
+				
 		}
-		
 	}
 
-	return 0;
+	return 1;
 }
 
 /*FUNÇÃO INSERIR ELEMENTO inicio - função implementada para inserir um elemento no inicio da lista*/
@@ -657,7 +663,7 @@ int qtdElementosLista(Lista *lista)
 	//Ponteiro criado para acessar a posição do elemento durante o loop;
 	listaNo *p;
 	//contador criado para armazenar a quantidade de elementos;
-	int contador;
+	int contador = 0;
 
 	//verifica se a lista foi criada;
 	if (lista == NULL)
@@ -669,7 +675,7 @@ int qtdElementosLista(Lista *lista)
 	//loop que percorre os elementos da lista;
 	for(p = lista->prim; p != NULL; p = p->prox){
 		//cada vez que o loop rodar para achar um elemento o contador soma 1 a quantidade;
-		contador +=1;
+		contador += 1;
 	}
 
 	printf("\nA lista atualmente possui %d elementos", contador);
@@ -778,7 +784,8 @@ int inverterLista(Lista *lista){
 
 	/*Loop que acessa a posição atual de cada elemento e exibe o
 	valor desse elemento*/
-	for(p = lista->ult; p != lista->prim || p == lista->prim; p = p->ant){
+	//nao considera o elemeto que é == a lista->prim;
+	for(p = lista->ult; p != NULL; p = p->ant){
 		
 		printf("\nCODIGO: %d", p->novaMoto.cod_moto);
 		printf("\nMARCA: %s",  p->novaMoto.marca);

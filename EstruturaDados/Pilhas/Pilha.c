@@ -1,11 +1,9 @@
 //Bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 #include <string.h>
-#include <windows.h>
 
-//Definições
+//Definiï¿½ï¿½es
 #define TAM 5
 
 //Estruturas
@@ -28,7 +26,7 @@ typedef struct
 	Motocicleta *elementos;
 } Pilha;
 
-//Declarando funções
+//Declarando funï¿½ï¿½es
 Pilha *criarPilha();
 Pilha * excluirPilha(Pilha *);
 int push(Pilha *, Motocicleta);
@@ -38,7 +36,7 @@ Pilha * excluirPilha(Pilha *);
 
 
 
-//Função main
+//Funï¿½ï¿½o main
 int main ()
 {
 	setlocale(LC_ALL, "Portuguese");
@@ -56,7 +54,7 @@ int main ()
 		printf("\n7 - Remover Registro da Moto");
 		printf("\n8 - Excluir lista de Motos");
 		printf("\n");
-		printf("\nEscolha uma opção: ");
+		printf("\nEscolha uma opï¿½ï¿½o: ");
 		scanf("%d", &opc);
 		getchar();
 
@@ -70,7 +68,7 @@ int main ()
 		case 2:
 
 			cabecalho();
-			printf("\nInsira o código: ");
+			printf("\nInsira o cï¿½digo: ");
 			scanf("%d", &novaMoto.cod_moto);
 			fflush(stdin);
 			printf("\nInsira a marca: ");
@@ -83,11 +81,11 @@ int main ()
 			scanf("%d", &novaMoto.cilindrada);
 			printf("\nInsira o partida: ");
 			scanf(" %c", &novaMoto.partida);
-			printf("\nInsira o alimentação: ");
+			printf("\nInsira o alimentaï¿½ï¿½o: ");
 			scanf(" %c", &novaMoto.alimentacao);
 			printf("\nInsira o carga: ");
 			scanf("%f", &novaMoto.capacidade_carga);
-			printf("\nInsira o preço: ");
+			printf("\nInsira o preï¿½o: ");
 			scanf("%f", &novaMoto.preco);
 
 			inserirElemento(lista, novaMoto);
@@ -112,7 +110,7 @@ int main ()
 
 		default:
 
-			printf("\nOpção inválida");
+			printf("\nOpï¿½ï¿½o invï¿½lida");
 			break;
 		}
 
@@ -126,7 +124,7 @@ int main ()
 		}
 		else
 		{
-			printf("\n\nOpção inválida...Prosseguindo com a aplicação");
+			printf("\n\nOpï¿½ï¿½o invï¿½lida...Prosseguindo com a aplicaï¿½ï¿½o");
 		}
 
 	}
@@ -134,14 +132,14 @@ int main ()
 	return 0;
 }
 
-//Funções
+//Funï¿½ï¿½es
 Lista *criarPilha()
 {
 	Pilha *novaPilha = (Lista*)malloc(sizeof(Lista));
 
 	if(novaPilha == NULL)
 	{
-		printf("Erro na alocação de memória");
+		printf("Erro na alocaï¿½ï¿½o de memï¿½ria");
 		return NULL;
 	}
 	
@@ -150,7 +148,7 @@ Lista *criarPilha()
 
 	if(novaPilha->elementos == NULL)
 	{
-		printf("\nNão tem espaço");
+		printf("\nNï¿½o tem espaï¿½o");
 		free(novaPilha);
 		return NULL;
 	}
@@ -204,7 +202,7 @@ void verTopo(Pilha *pilha)
 
 	if(pilha == NULL)
 	{
-		printf("\nA pilha não foi criada");
+		printf("\nA pilha nï¿½o foi criada");
 	}
 	if(pilha->id == 0)
 	{
@@ -241,7 +239,7 @@ int eVazia(Pilha *pilha){
 	
 	if(pilha == NULL)
 	{
-		printf("\nA pilha não foi criada");
+		printf("\nA pilha nï¿½o foi criada");
 		return 1;
 	}
 	if(pilha->id == 0)

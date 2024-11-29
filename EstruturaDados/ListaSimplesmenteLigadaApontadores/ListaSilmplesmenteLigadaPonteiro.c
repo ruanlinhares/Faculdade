@@ -1,3 +1,21 @@
+/****************************************************************** 
+ * Nome: Lista com vetores                                        *
+ * Descricao: Implementacao de lista com uso de vetores (array).  *
+ *            Esse codigo possui as principais operacoes da       *
+ *            lista, como:                                        *
+ *            criar lista,                                        *
+ *            inserir elemento(inicio, fim, por posicao),         *
+ *            remover elemento,                                   *
+ *            buscar elemento,                                    *
+ *            mostrar elementos,                                  *
+ *            atualizar elementos,								  *
+ * 			  mostrar quantidade de elementos                     *
+ *            excluir lista,									  *
+ * 			  salvar dados,										  *
+ * 			  carregar dados.                                     *
+ * Autor: Ruan Vitor Linhares									  *                                   *
+ ******************************************************************/
+
 //Bibliotecas
 #include <stdio.h>
 #include <stdlib.h>

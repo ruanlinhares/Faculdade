@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-//Defini��es
+//Definicoes
 #define TAM 5
 
 //Estruturas
@@ -36,10 +36,10 @@ Pilha * excluirPilha(Pilha *);
 
 
 
-//Fun��o main
+//Funcao main
 int main ()
 {
-	setlocale(LC_ALL, "Portuguese");
+
 
 	int opc;
 	char continuar = 's';
@@ -62,12 +62,11 @@ int main ()
 		{
 		case 1:
 
-			lista = criarLista();
+			pilha = criarLista();
 			break;
 
 		case 2:
 
-			cabecalho();
 			printf("\nInsira o c�digo: ");
 			scanf("%d", &novaMoto.cod_moto);
 			fflush(stdin);
@@ -88,7 +87,7 @@ int main ()
 			printf("\nInsira o pre�o: ");
 			scanf("%f", &novaMoto.preco);
 
-			inserirElemento(lista, novaMoto);
+			inserirElemento(pilha, novaMoto);
 
 			break;
 
@@ -110,7 +109,7 @@ int main ()
 
 		default:
 
-			printf("\nOp��o inv�lida");
+			printf("\nOpcao invalida");
 			break;
 		}
 
@@ -132,14 +131,15 @@ int main ()
 	return 0;
 }
 
-//Fun��es
-Lista *criarPilha()
+//Funcoes
+
+Pilha *criarPilha()
 {
-	Pilha *novaPilha = (Lista*)malloc(sizeof(Lista));
+	Pilha *novaPilha = (Pilha*)malloc(sizeof(Pilha));
 
 	if(novaPilha == NULL)
 	{
-		printf("Erro na aloca��o de mem�ria");
+		printf("Erro na alocacao de memoria");
 		return NULL;
 	}
 	
@@ -156,9 +156,9 @@ Lista *criarPilha()
 	return novaPilha;
 }
 
-Lista *excluirPilha(Pilha *lista)
+Pilha *excluirPilha(Pilha *pilha)
 {
-	if(lista == NULL)
+	if(pilha == NULL)
 	{
 		printf("\nA lista nunca existiu...");
 		return NULL;
@@ -204,7 +204,7 @@ void verTopo(Pilha *pilha)
 	{
 		printf("\nA pilha n�o foi criada");
 	}
-	if(pilha->id == 0)
+	if(pilha->topo == 0)
 	{
 		printf("\nPilha vazia");
 	}
@@ -226,7 +226,7 @@ int pop(Pilha *pilha)
 	}
 
 	if(pilha->topo != 0){
-		--(Pilha->topo);
+		--(pilha->topo);
 	}else{
 		printf("A pilha esta vazia");
 		return 0;
@@ -239,10 +239,10 @@ int eVazia(Pilha *pilha){
 	
 	if(pilha == NULL)
 	{
-		printf("\nA pilha n�o foi criada");
+		printf("\nA pilha nao foi criada");
 		return 1;
 	}
-	if(pilha->id == 0)
+	if(pilha->topo == 0)
 	{
 		printf("\nPilha vazia");
 		return 1;

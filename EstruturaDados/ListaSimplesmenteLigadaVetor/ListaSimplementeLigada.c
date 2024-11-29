@@ -1,12 +1,31 @@
-//Bibliotecas
+/****************************************************************** 
+ * Nome: Lista com vetores                                        *
+ * Descricao: Implementacao de lista com uso de vetores (array).  *
+ *            Esse codigo possui as principais operacoes da       *
+ *            lista, como:                                        *
+ *            criar lista,                                        *
+ *            inserir elemento(inicio, fim, por posicao),         *
+ *            remover elemento,                                   *
+ *            buscar elemento,                                    *
+ *            mostrar elementos,                                  *
+ *            atualizar elementos,								  *
+ * 			  mostrar quantidade de elementos                     *
+ *            excluir lista,									  *
+ * 			  salvar dados,										  *
+ * 			  carregar dados.                                     *
+ * Autor: Ruan Vitor Linhares									  *
+ * Ultima alteracao: 18/09/2024                                   *
+ ******************************************************************/
+
+//Bibliotecas chamadas
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-//Definicoes
+//Definicoes das constantes
 #define TAM 5
 
-//Estruturas
+//Definição de estruturas
 typedef struct
 {
 	int cod_moto;
@@ -50,12 +69,12 @@ int main ()
 	char continuar = 's';
 	Motocicleta novaMoto;
 
-
+	//Ponteiro usado para criar lista
 	Lista *lista = NULL;
 
 	do
 	{
-		cabecalho();
+		//menu de opcoes com switch(case)
 		printf("\n1 - Criar Lista");
 		printf("\n2 - Inserir moto");
 		printf("\n3 - inserir moto em uma posicao na lista");
@@ -189,7 +208,7 @@ int main ()
 
 			printf("\nInsira o codigo da moto que deseja atualizar: ");
 			scanf("%d", &cod_busca);
-			fflush(stdin);
+			getchar();
 
 			printf("\nInsira a marca: ");
 			fgets(novaMoto.marca, 20, stdin);
@@ -233,16 +252,11 @@ int main ()
 		}
 
 		printf("\n\nDeseja continuar?[s/n]\n");
-		getchar();
 		scanf(" %c", &continuar);
 
 		if(continuar == 'n' || continuar == 'N')
 		{
 			exit(0);
-		}
-		else
-		{
-			printf("\n\nOpcao invalida...Prosseguindo com a aplicacao");
 		}
 
 	}
@@ -252,42 +266,63 @@ int main ()
 
 //Funcoes
 
+/* Nome: criarLista
+ * Parametro: void 
+ * Retorno: endereco do espaco de memoria reservado pelo malloc
+ * Descricao: Funcao responsavel pela criacao da lista e inicializacao
+ *            do campo id e alocacao do vetor de elementos
+ */
 Lista *criarLista()
 {
-	Lista *newList = (Lista*)malloc(sizeof(Lista));
+	//alocacao de memoria para a lista
+	Lista *novaLista = (Lista*)malloc(sizeof(Lista));
 
-	if(newList == NULL)
+	//verifica se o sistema conseguiu alocar um espaco para lista
+	if(novaLista == NULL)
 	{
 		printf("Erro na alocacao de memoria");
 		return NULL;
 	}
 	
-	newList->id = 0;
-	newList->elementos = (Motocicleta *)malloc(TAM * sizeof(Motocicleta));
+	//atribui valor ao nosso id 
+	novaLista->id = 0;
+	//aloca memoria para um vetor de 5 elementos
+	novaLista->elementos = (Motocicleta *)malloc(TAM * sizeof(Motocicleta));
 
-	if(newList->elementos == NULL)
+	//verifica se o sistema conseguiu alocar um vetor de 5 elementos
+	if(novaLista->elementos == NULL)
 	{
 		printf("\nNao tem espaco");
-		free(newList);
+		//caso não limpa a lista que ja existia
+		free(novaLista);
 		return NULL;
 	}
 
-	return newList;
+	//retorna a lista criada
+	return novaLista;
 }
 
+/* Nome: imprimirElementos
+ * Parametro: lista - ponteiro que possui o endereco lista
+ * Retorno: void
+ * Descricao: Funcao criada para apresentar todos elementos presentes na lista
+ */
 void imprimirElementos(Lista *lista)
-{
+{	
 	int i;
 
-	if(lista == NULL)
-	{
+	//verifica se a lista existe
+	if(lista == NULL){
 		printf("\nA lista nao foi criada");
 	}
+
+	//verifica se a lista esta vazia
 	if(lista->id == 0)
 	{
 		printf("\nLista vazia");
 	}
 
+	//loop que percorre o vetor imprimindo os elementos contidos nele
 	for(i = 0; i < lista->id; ++i)
 	{
 		printf("\nMOTO %d\n\n", i + 1);
@@ -304,23 +339,32 @@ void imprimirElementos(Lista *lista)
 
 }
 
-
+/* Nome: inserirElemento
+ * Parametros: lista - ponteiro que possui o endereco lista
+ *             valor - elemento que sera adicionado na lista
+ * Retorno: 1 se o elemento foi adicionado, 0 - caso contrario
+ * Descricao: Funcao criada para inserir um elemento no final da lista
+ */
 int inserirElemento(Lista *lista, Motocicleta novaMoto)
 {
-
+	//verifica se a lista foi criada
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada\n");
 		return 0;
 	}
 
+	//verifica de a lista tem espaço
 	if(lista->id < TAM)
 	{
+		//insere um elemento no vetor
 		lista->elementos[lista->id] = novaMoto;
+		//aumenta um elemento no vetor para apresentar o novo elemento inserido
 		++(lista->id);
 	}
 	else
 	{
+		//caso o vetor nao tenha espaço exibe essa mensagem
 		printf("\nEspaco esgotado\n");
 		return 0;
 	}
@@ -328,26 +372,41 @@ int inserirElemento(Lista *lista, Motocicleta novaMoto)
 	return 1;
 }
 
+/* Nome: inserirElementoPosi
+ * Parametros: lista - ponteiro que possui o endereco lista
+ *             novaMoto - elemento que sera adicionado na lista
+ *             vPosition - posicao que o elemento sera adicionado na lista
+ * Retorno: 1 se o elemento foi adicionado, 0 - caso contrario
+ * Descricao: Funcao criada para inserir um elemento na posicao indicada na lista
+ */
 int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int vPosition)
 {
 	int i;
+
+	//verifica se a lista foi criada
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada\n");
 		return 0;
 	}
 
+    //verifica de a lista tem espaco
 	if(lista->id < TAM)
-	{
+	{	
+		//verifica se a posicao escolhida existe
 		if(vPosition < lista->id)
-		{
+		{	
+			//percorre o vetor ate a posicao escolhida
 			for( i = lista->id; i > vPosition; --i)
 			{
+				//enquanto nao acha o valor movimenta os elementos do vetor para a direita 
 				lista->elementos[i] = lista->elementos[i - 1];
 			}
 
+			//insere o elemento na posicao escolhida
 			lista->elementos[vPosition] = novaMoto;
-
+			
+			//adiciona mais um elemento ao vetor para exibi-lo
 			++(lista->id);
 		}
 		else
@@ -361,28 +420,42 @@ int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int vPosition)
 		printf("Lista sem espaco");
 		return 0;
 	}
+	
+	//retorna 1 para dizer que foi adicionado com sucesso
 	return 1;
 }
 
+/* Nome: inserirElementoInicio
+ * Parametros: lista - ponteiro que possui o endereco lista
+ *             cod_moto - elemento que sera adicionado na lista
+ * Retorno: 1 se o elemento foi adicionado, 0 - caso contrario
+ * Descricao: Funcao criada para inserir um elemento no inicio da lista
+ */
 int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
 {
 	int i;
 
+	//verifica de a lista existe
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada");
 		return 0;
 	}
-
+	
+	//verifica se a lista tem espaco
 	if(lista->id < TAM)
 	{
+		//percorre a lista ate a primeira posicao
 		for(i = lista->id; i > 0; --i)
 		{
+			//movimenta os elementos para direita
 			lista->elementos[i] = lista->elementos[i - 1];
 		}
 
+		//insere o novo elemento na primeira posicao
 		lista->elementos[0] = novaMoto;
 
+		//adiciona mais um elemento ao vetor para exibi-lo
 		++(lista->id);
 
 	}
@@ -392,10 +465,16 @@ int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
 		return 0;
 	}
 
+	//retorna 1 para indicar que inseriu com sucesso
 	return 1;
 }
 
-
+/* Nome: buscarElemento
+ * Parametro: lista - ponteiro que possui o endereco lista
+ *            cod_moto - elemento que sera buscado na lista
+ * Retorno: o indice do elemento encontrado, -1 caso contrario
+ * Descricao: Funcao criada para buscar um elemento na lista
+ */
 int buscarElemento(Lista *lista, int cod_moto)
 {
 	int i;
@@ -428,7 +507,12 @@ int buscarElemento(Lista *lista, int cod_moto)
 	return 0;
 }
 
-
+/* Nome: removerElemento
+ * Parametro: lista - ponteiro que possui o endereco lista
+ *            cod_moto - elemento que sera removido da lista
+ * Retorno: 1 se o elemento foi removido, 0 - caso contrario
+ * Descricao: Funcao criada para remover um elemento da lista
+ */
 int removerElemento(Lista *lista, int cod_moto)
 {
 	int i, j;
@@ -476,6 +560,14 @@ Lista *excluirLista(Lista *lista)
 	return NULL;
 }
 
+/* Nome: atualizarElementos
+ * Parametros: lista - ponteiro que possui o endereco lista
+ *             cod_busca - elemento que sera buscado na lista
+ *             novaMoto - novo valor do elemento que sera alterado 
+ * Retorno: 1 - quando o valor e atualizado e 0 - caso contrario
+ * Descricao: Funcao responsavel por atualizar um elemento
+ *            da lista, caso o mesmo esteja na lista indicada
+ */
 int atualizarElementos(Lista *lista,  Motocicleta novaMoto, int cod_busca)
 {
 	int i;
@@ -506,6 +598,11 @@ int atualizarElementos(Lista *lista,  Motocicleta novaMoto, int cod_busca)
 	return 1;
 }
 
+/* Nome: qtdElementosLista
+ * Parametro: lista - ponteiro que possui o endereco lista
+ * Retorno: void
+ * Descricao: Funcao criada para contar a quantidade de elementos do vetor
+ */
 void qtdElementosLista(Lista *lista)
 {
 	int qtd_elementos = lista->id;
@@ -524,6 +621,12 @@ void qtdElementosLista(Lista *lista)
 	}
 }
 
+/* Nome: salvarDados
+ * Parametro: lista - ponteiro que possui o endereco lista
+ * Retorno: 1 - para quando salva os dados || 0 - quando não consegue salvar os dados
+ * Descricao: Funcao cria um documento ".txt" e insere/salva nele as informações
+ * 			  que estavam na memória do programa em execução.
+ */
 int salvarDados(Lista* lista)
 {
 	int i;
@@ -562,6 +665,12 @@ int salvarDados(Lista* lista)
 	return 1;
 }
 
+/* Nome: carregarDados
+ * Parametro: lista - ponteiro que possui o endereco lista
+ * Retorno: 1 - quando carrega os dados na memoria do programa em execucao || 0 - caso contrario
+ * Descricao: Funcao criada para carregar os dados de um documento ".txt" para a memoria
+ * 			  programa em execucao
+ */
 int carregarDados(Lista *lista)
 {
 

@@ -479,17 +479,20 @@ int buscarElemento(Lista *lista, int cod_moto)
 {
 	int i;
 
+	//verifica se a lista foi criada
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada");
 		return 0;
 	}
 
+	//o loop percorre os elementos do vetor
 	for(i = 0; i < lista->id; ++i)
 	{
+		//verifica se o codigo digitado existe, se sim retorna o elemento e seus atributos
 		if(lista->elementos[i].cod_moto == cod_moto)
 		{
-			printf("\nMOTO %d\n\n", i + 1);
+			printf("\nMOTO %d\n\n", i + 1);\
 			printf("Codigo: %d\n", lista->elementos[i].cod_moto);
 			printf("Marca: %s", lista->elementos[i].marca);
 			printf("Modelo: %s", lista->elementos[i].modelo);
@@ -504,6 +507,7 @@ int buscarElemento(Lista *lista, int cod_moto)
 	}
 	
 	printf("\nCodigo da moto nao encontrado...");
+	//retorna 0 se o elemento procurado não for encontrado
 	return 0;
 }
 
@@ -517,46 +521,63 @@ int removerElemento(Lista *lista, int cod_moto)
 {
 	int i, j;
 
+	//verifica se a lista foi criada
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada\n");
 		return 0;
 	}
 
+	//esse primeiro loop percorre a vetor
 	for(i = 0; i < lista->id; ++i)
 	{
+		//verifica se o codigo do elemento procurado esta contido no vetor
 		if( cod_moto == lista->elementos[i].cod_moto)
 		{
+			//segundo loop percorre o vetor 
 			for(j = i; j < lista->id - 1; ++j)
 			{
+				//movimenta os elementos para a esquerda ate remover o elemento localizado
 				lista->elementos[j] = lista->elementos[j + 1];
 			}
 
+			//decrementa o vetor para remover o espaço do elemento removido
 			--(lista->id);
 
 			printf("Moto removida com sucesso...");
+			//retorna 1 se o elemento for removido
 			return 1;
 		}
 
 	}
 	printf("\nCodigo da moto nao encontrado...");
+	//retorna 0 se o elemento nao for localizado
 	return 0;
 }
 
+/* Nome: excluirLista
+ * Parametro: lista - ponteiro que possui o endereco lista
+ * Retorno: NULL para indicar que a lista foi excluida
+ * Descricao: Funcao responsavel pela exclusao da lista
+ */
 Lista *excluirLista(Lista *lista)
 {
+	//verifica se alista foi criada
 	if(lista == NULL)
 	{
 		printf("\nA lista nunca existiu...");
 		return NULL;
 	}
 
+	//libera da memória o vetor de elementos
 	free(lista->elementos);
 
+	//libera da memória a struct lista 
 	free(lista);
 
 	printf("\nLista de Motos excluida com sucesso...");
 
+	//retorna NULL se conseguir excluir a lista
 	return NULL;
 }
 
@@ -572,18 +593,23 @@ int atualizarElementos(Lista *lista,  Motocicleta novaMoto, int cod_busca)
 {
 	int i;
 
+	//verifica se a lista foi criada
 	if (lista == NULL)
 	{
 		printf("\nA lista nao foi criada");
 		return 0;
 	}
 
+	//verifica se o codigo digitado existe
 	if(cod_busca >= 0 )
 	{
+		//loop percorre o verto
 		for(i = 0; i <= lista->id; i += 1)
 		{
+			//verifica se o codigo digitado e igual ao codigo de algum elemento da lista
 			if(lista->elementos[i].cod_moto == cod_busca)
 			{
+				//atribui os o elemnto atualizado a posicao do anterior
 				lista->elementos[i] = novaMoto;
 
 				printf("\nDados alterados com sucesso...");
@@ -595,6 +621,7 @@ int atualizarElementos(Lista *lista,  Motocicleta novaMoto, int cod_busca)
 		printf("\nCodigo da moto nao encontrado...");
 		return 0;
 	}
+	//retorna 1 se conseguir atualiza o registro da moto
 	return 1;
 }
 
@@ -605,12 +632,15 @@ int atualizarElementos(Lista *lista,  Motocicleta novaMoto, int cod_busca)
  */
 void qtdElementosLista(Lista *lista)
 {
+	
 	int qtd_elementos = lista->id;
 
+	//verifica se a lista existe 
 	if (lista == NULL)
 	{
 		printf("\nA lista nao foi criada");
 	}
+	//verifica se a lista tem elementos, se sim imprime a quantidade
 	if(qtd_elementos > 0)
 	{
 		printf("\nA lista tem atualmente %d elemento(s)", qtd_elementos);
@@ -631,23 +661,27 @@ int salvarDados(Lista* lista)
 {
 	int i;
 
+	//verifica se a lista existe 
 	if(lista == NULL)
 	{
 		printf("\nA lista nao foi criada");
 		return 0;
 	}
 
+	//cria um ponteiro do tipo FILE e utiliza fopen() para criar um .txt e escrever
 	FILE * arquivo = fopen("RegistroMotos.txt", "w");
 
-
+	//verifica se o .txt dfoi criado 
 	if(arquivo == NULL)
 	{
 		printf("Erro ao abrir o aquivo");
 		return 0;
 	}
 
+	//loop percorre todos os elementos do vetor
 	for(i = 0; i < lista->id; ++i)
 	{
+		//utilizamos fprintf() para gravar os atributos do elemento nio .txt
 		fprintf(arquivo, "\nMOTO %d", i + 1);
 		fprintf(arquivo, "\nCODIGO:%d", lista->elementos[i].cod_moto);
 		fprintf(arquivo, "\nMARCA: %s", lista->elementos[i].marca);
@@ -659,9 +693,12 @@ int salvarDados(Lista* lista)
 		fprintf(arquivo, "\nCARGA: %.1f KG", lista->elementos[i].capacidade_carga);
 		fprintf(arquivo, "\nPRECO: R$ %.2f", lista->elementos[i].preco);
 	}
+	//fecha a operacao no .txt e salva os registros de escrita feito nele
 	fclose(arquivo);
 
 	printf("\nDados salvos com sucesso...");
+	
+	//retorna 1 se os dados foram salvos 
 	return 1;
 }
 

@@ -1,6 +1,6 @@
 /****************************************************************** 
- * Nome: Lista com vetores                                        *
- * Descricao: Implementacao de lista com uso de vetores (array).  *
+ * Nome: Lista simplesmente encadeada com apontadores     	      *
+ * Descricao: Implementacao de lista com uso de ponteiros.		  *
  *            Esse codigo possui as principais operacoes da       *
  *            lista, como:                                        *
  *            criar lista,                                        *
@@ -13,7 +13,7 @@
  *            excluir lista,									  *
  * 			  salvar dados,										  *
  * 			  carregar dados.                                     *
- * Autor: Ruan Vitor Linhares									  *                                   *
+ * Autor: Ruan Vitor Linhares									  * 
  ******************************************************************/
 
 //Bibliotecas

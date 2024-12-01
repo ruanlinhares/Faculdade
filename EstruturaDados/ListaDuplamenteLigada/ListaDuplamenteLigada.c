@@ -1,8 +1,26 @@
-
+/****************************************************************** 
+ * Nome: Lista duplamente encadeada com apontadores               *
+ * Descricao: Implementacao de lista com uso de ponteiros.		  *
+ *            Esse codigo possui as principais operacoes da       *
+ *            lista, como:                                        *
+ *            criar lista,                                        *
+ *            inserir elemento(inicio, fim, por posicao),         *
+ *            remover elemento,                                   *
+ *            buscar elemento,                                    *
+ *            mostrar elementos,                                  *
+ *            atualizar elementos,								  *
+ * 			  mostrar quantidade de elementos                     *
+ *            excluir lista,									  *
+ * 			  salvar dados,										  *
+ * 			  carregar dados,									  *
+ * 			  inverter elementos.                                 *
+ * Autor: Ruan Vitor Linhares									  * 
+ ******************************************************************/
 //Bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 //Estruturas
 typedef struct ListaNo listaNo;
 
@@ -433,10 +451,9 @@ int inserirElementoPosi(Lista *lista, Motocicleta novaMoto, int cod_busca)
 /*FUNÇÃO INSERIR ELEMENTO inicio - função implementada para inserir um elemento no inicio da lista*/
 int inserirElementoInicio(Lista * lista, Motocicleta novaMoto)
 {
-	//Ponteiro criado para acessar a posição do elemento;
 	listaNo *p;
-	//variavel auxiliar para realizar operações;
 	listaNo *aux;
+
 	//Ponteiro criado para acessar uma posição anterior de *p durante o loop;
 	listaNo *novoEspaco = (listaNo*)malloc(sizeof(listaNo));
 
@@ -530,9 +547,7 @@ int removerElemento(Lista *lista, int cod_busca)
 {
 	//Ponteiro criado para acessar a posição do elemento durante o loop;
 	listaNo *p;
-	listaNo* j;
-	//Ponteiro criado para acessar uma posição anterior de *p durante o loop;
-	listaNo *espacoAnterior;
+
 	//ponteiro criado para armazenar um valor para liberar seu espaço de memoria;
 	listaNo *ref;
 
@@ -554,7 +569,7 @@ int removerElemento(Lista *lista, int cod_busca)
 	if(lista->prim->novaMoto.cod_moto == cod_busca){
 		//guarda o elemento em ref;
 		ref = lista->prim;
-		//faz lista->prim apontar para o elemento seguinte do lista->prim anterior;
+		//faz lista->prim apontar para o elemento seguinte do lista->prim;
 		lista->prim = lista->prim->prox;
 		//libera o antigo valor de lista->prim;
 		free(ref);
@@ -564,16 +579,15 @@ int removerElemento(Lista *lista, int cod_busca)
 
 	//percorre todos os elementos da lista;
 	//pegamos o elemento atual e a posição do elemento anterior a ele; 
-	for(p = lista->prim; p != NULL; espacoAnterior = p , p = p->prox){
+	for(p = lista->prim; p->prox != NULL; p = p->prox){
 				
 		//verifica se o elemnto buscado existe na lista	
 		if(cod_busca == p->novaMoto.cod_moto){
 
 			//guarda a referencia do elemento atual;
 			ref = p;
-			//faz o elemento anterior ao atual apontar para o elemento depois do atual;
-			espacoAnterior->prox = p->prox;
-			p->prox->ant = espacoAnterior;
+			p->ant->prox = p->prox;
+			p->prox->ant = p->ant;
 			//libera o espaço do elemento atual;
 			free(ref);	
 			return 1;
@@ -610,8 +624,7 @@ Lista *excluirLista(Lista *lista)
 		free(ref);
 	}
 	
-	//libera o espaço da lista
-	free(lista->ult);
+	//libera o espaço da lista	
 	free(lista);
 
 	//informa que todo o espaço foi liberodo excluindo a lista;
@@ -788,8 +801,6 @@ int inverterLista(Lista *lista){
 
 	/*Loop que acessa a posição atual de cada elemento e exibe o
 	valor desse elemento*/
-	//nao considera o elemeto que é == a lista->prim;
-	
 	for(p = lista->ult; p != NULL; p = p->ant){
 		
 		printf("\nCODIGO: %d", p->novaMoto.cod_moto);

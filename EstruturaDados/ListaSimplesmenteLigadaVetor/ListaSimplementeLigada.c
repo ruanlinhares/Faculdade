@@ -1,5 +1,5 @@
 /****************************************************************** 
- * Nome: Lista com vetores                                        *
+ * Nome: Lista simplesmenet encadeada com vetores                 *
  * Descricao: Implementacao de lista com uso de vetores (array).  *
  *            Esse codigo possui as principais operacoes da       *
  *            lista, como:                                        *

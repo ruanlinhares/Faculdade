@@ -29,8 +29,8 @@
 typedef struct
 {
 	int cod_moto;
-	char marca[20];
-	char modelo[20];
+	char marca[50];
+	char modelo[50];
 	char cor;
 	int cilindrada;
 	char partida;
@@ -108,9 +108,9 @@ int main ()
 			scanf("%d", &novaMoto.cod_moto);
 			getchar();
 			printf("\nInsira a marca: ");
-			fgets(novaMoto.marca, 20, stdin);
+			scanf("%s", &novaMoto.marca);
 			printf("\nInsira o modelo: ");
-			fgets(novaMoto.modelo, 20, stdin);
+			scanf("%s", &novaMoto.modelo);
 			printf("\nInsira o cor: ");
 			scanf("%s", &novaMoto.cor);
 			printf("\nInsira o cilindrada: ");
@@ -132,11 +132,11 @@ int main ()
 
 			printf("\nInsira o codigo: ");
 			scanf("%d", &novaMoto.cod_moto);
-			fflush(stdin);
+			getchar();
 			printf("\nInsira a marca: ");
-			fgets(novaMoto.marca, 20, stdin);
+			scanf("%s", &novaMoto.marca);
 			printf("\nInsira o modelo: ");
-			fgets(novaMoto.modelo, 20, stdin);
+			scanf("%s", &novaMoto.modelo);
 			printf("\nInsira o cor: ");
 			scanf("%s", &novaMoto.cor);
 			printf("\nInsira o cilindrada: ");
@@ -160,11 +160,11 @@ int main ()
 
 			printf("\nInsira o codigo: ");
 			scanf("%d", &novaMoto.cod_moto);
-			fflush(stdin);
+			getchar();
 			printf("\nInsira a marca: ");
-			fgets(novaMoto.marca, 20, stdin);
+			scanf("%s", &novaMoto.marca);
 			printf("\nInsira o modelo: ");
-			fgets(novaMoto.modelo, 20, stdin);
+			scanf("%s", &novaMoto.modelo);
 			printf("\nInsira o cor: ");
 			scanf("%s", &novaMoto.cor);
 			printf("\nInsira o cilindrada: ");
@@ -179,6 +179,7 @@ int main ()
 			scanf("%f", &novaMoto.preco);
 
 			inserirElementoInicio(lista, novaMoto);
+			break;
 
 		case 5 :
 
@@ -211,9 +212,9 @@ int main ()
 			getchar();
 
 			printf("\nInsira a marca: ");
-			fgets(novaMoto.marca, 20, stdin);
+			scanf("%s", &novaMoto.marca);
 			printf("\nInsira o modelo: ");
-			fgets(novaMoto.modelo, 20, stdin);
+			scanf("%s", &novaMoto.modelo);
 			printf("\nInsira o cor: ");
 			scanf("%s", &novaMoto.cor);
 			printf("\nInsira o cilindrada: ");
@@ -327,8 +328,8 @@ void imprimirElementos(Lista *lista)
 	{
 		printf("\nMOTO %d\n\n", i + 1);
 		printf("Codigo: %d\n", lista->elementos[i].cod_moto);
-		printf("Marca: %s", lista->elementos[i].marca);
-		printf("Modelo: %s", lista->elementos[i].modelo);
+		printf("Marca: %s\n", lista->elementos[i].marca);
+		printf("Modelo: %s\n", lista->elementos[i].modelo);
 		printf("Cor: %c\n", lista->elementos[i].cor);
 		printf("Cilindrada: %d\n", lista->elementos[i].cilindrada);
 		printf("Partida: %c\n", lista->elementos[i].partida);
@@ -494,8 +495,8 @@ int buscarElemento(Lista *lista, int cod_moto)
 		{
 			printf("\nMOTO %d\n\n", i + 1);\
 			printf("Codigo: %d\n", lista->elementos[i].cod_moto);
-			printf("Marca: %s", lista->elementos[i].marca);
-			printf("Modelo: %s", lista->elementos[i].modelo);
+			printf("Marca: %s\n", lista->elementos[i].marca);
+			printf("Modelo: %s\n", lista->elementos[i].modelo);
 			printf("Cor: %c\n", lista->elementos[i].cor);
 			printf("Cilindrada: %d\n", lista->elementos[i].cilindrada);
 			printf("Partida: %c\n", lista->elementos[i].partida);
@@ -681,17 +682,17 @@ int salvarDados(Lista* lista)
 	//loop percorre todos os elementos do vetor
 	for(i = 0; i < lista->id; ++i)
 	{
-		//utilizamos fprintf() para gravar os atributos do elemento nio .txt
-		fprintf(arquivo, "\nMOTO %d", i + 1);
-		fprintf(arquivo, "\nCODIGO:%d", lista->elementos[i].cod_moto);
-		fprintf(arquivo, "\nMARCA: %s", lista->elementos[i].marca);
-		fprintf(arquivo, "MODELO: %s", lista->elementos[i].modelo);
-		fprintf(arquivo, "COR: %c", lista->elementos[i].cor);
-		fprintf(arquivo, "\nCILINDRADA: %d", lista->elementos[i].cilindrada);
-		fprintf(arquivo, "\nPARTIDA: %c", lista->elementos[i].partida);
-		fprintf(arquivo, "\nALIMENTACAO: %c", lista->elementos[i].alimentacao);
-		fprintf(arquivo, "\nCARGA: %.1f KG", lista->elementos[i].capacidade_carga);
-		fprintf(arquivo, "\nPRECO: R$ %.2f", lista->elementos[i].preco);
+		//utilizamos fprintf() para gravar os atributos do elemento no arquivo .txt
+		fprintf(arquivo, "%d %s %s %c %d %c %c %.1f %.2f\n", 
+		lista->elementos[i].cod_moto, 
+		lista->elementos[i].marca, 
+		lista->elementos[i].modelo,
+		lista->elementos[i].cor, 
+		lista->elementos[i].cilindrada, 
+		lista->elementos[i].partida, 
+		lista->elementos[i].alimentacao, 
+		lista->elementos[i].capacidade_carga, 
+		lista->elementos[i].preco);
 	}
 	//fecha a operacao no .txt e salva os registros de escrita feito nele
 	fclose(arquivo);
@@ -710,24 +711,45 @@ int salvarDados(Lista* lista)
  */
 int carregarDados(Lista *lista)
 {
-
+	//define o numero de caracteres a ser lido por linha
+	char registro[150];
+	//abre um arquivo .txt no modo de leitura;
 	FILE * arquivo = fopen("RegistroMotos.txt", "r");
+	//cria um elemento para armazenarmos os registros;
+	Motocicleta registroMoto;
 
+	//verifica se o arquivo foi aberto
 	if(arquivo == NULL)
 	{
 		printf("\nErro ao abrir o arquivo...");
 		return 0;
 	}
 
-
-	char registro[100];
-	while(fgets(registro, 100, arquivo) != NULL)
+	// loop percorre cada linha do arquivo enquando ouver carateres a serem registrados
+	while(fgets(registro, 150, arquivo) != NULL)
 	{
-		printf("%s", registro);
+		//verigfica se cada linha tem esses exatos dados ordenados 
+		if(sscanf(registro, "%d %s %s %c %d %c %c %f %f\n", 
+			&registroMoto.cod_moto, 
+			registroMoto.marca,
+			registroMoto.modelo, 
+			&registroMoto.cor, 
+			&registroMoto.cilindrada, 
+			&registroMoto.partida,
+			&registroMoto.alimentacao, 
+			&registroMoto.capacidade_carga, 
+			&registroMoto.preco) == 9){
+			
+			//insere no nosso elemento moto os dados lidos
+			inserirElemento(lista, registroMoto);	
+		}	
+	
 	}
 
+	//fecha a operacao do arquivo
 	fclose(arquivo);
 	printf("\n\nDados carregados com sucesso...");
+	//retorna 1 se o aquivo conseguir carregar os dados na memoria
 	return 1;
 }
 

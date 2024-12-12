@@ -800,7 +800,7 @@ int inverterLista(Lista *lista){
 	}
 
 	/*Loop que acessa a posição atual de cada elemento e exibe o
-	valor desse elemento*/
+	valor desse elemento*/	
 	for(p = lista->ult; p != NULL; p = p->ant){
 		
 		printf("\nCODIGO: %d", p->novaMoto.cod_moto);

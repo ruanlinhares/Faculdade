@@ -32,7 +32,7 @@ Pilha * excluirPilha(Pilha *);
 int push(Pilha *, Motocicleta);
 void verTopo(Pilha *);
 int pop(Pilha *);
-Pilha * excluirPilha(Pilha *);
+Pilha * ehVazia(Pilha *);
 
 
 
@@ -54,7 +54,7 @@ int main ()
 		printf("\n7 - Remover Registro da Moto");
 		printf("\n8 - Excluir lista de Motos");
 		printf("\n");
-		printf("\nEscolha uma op��o: ");
+		printf("\nEscolha uma opcao: ");
 		scanf("%d", &opc);
 		getchar();
 
@@ -67,7 +67,7 @@ int main ()
 
 		case 2:
 
-			printf("\nInsira o c�digo: ");
+			printf("\nInsira o codigo: ");
 			scanf("%d", &novaMoto.cod_moto);
 			fflush(stdin);
 			printf("\nInsira a marca: ");

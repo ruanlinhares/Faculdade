@@ -11,8 +11,7 @@
  *            excluir Pilha,                                      *
  * 			  Carregar Dados,                                     *
  * 			  Salvar Dados.                                       *
- * Autor: Mayrton Dias                                            *
- * Ultima alteracao: 18/09/2024                                   *
+ * Autor: RUAN VITOR LINHARES                                     *
  ******************************************************************/
 
 //Bibliotecas
@@ -20,10 +19,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-//Definicoes
-#define TAM 5
-
 //Estruturas
+typedef struct PilhaNo pilhaNo;
+
 typedef struct
 {
 	int cod_moto;
@@ -39,11 +37,16 @@ typedef struct
 
 typedef struct
 {
-	int topo;
-	Motocicleta *elementos;
+	pilhaNo *topo;
 } Pilha;
 
-//Declarando fun��es
+struct PilhaNo
+{
+	Motocicleta novaMoto;
+	pilhaNo *prox;
+};
+
+//Declarando funcoes
 Pilha *criarPilha();
 Pilha * excluirPilha(Pilha *);
 int push(Pilha *, Motocicleta);
@@ -185,19 +188,6 @@ Pilha *criarPilha()
 		return NULL;
 	}
 
-	//definindo valores para os elementos da pilha
-	novaPilha->topo = 0;
-	//pede espaco na memoria para um vetor de elementos do tipo motocicleta
-	novaPilha->elementos = (Motocicleta *)malloc(TAM * sizeof(Motocicleta));
-
-	//veroficando de o espaço para o vetor de motocicletas foi alocado
-	if(novaPilha->elementos == NULL)
-	{
-		printf("\nNao tem espaco");
-		free(novaPilha);
-		return NULL;
-	}
-
 	return novaPilha;
 }
 
@@ -208,6 +198,10 @@ Pilha *criarPilha()
  */
 Pilha *excluirPilha(Pilha *pilha)
 {
+	//definição de variaveis
+    pilhaNo *p;
+    pilhaNo *ref;
+
 	//verifica se a pilha existe
 	if(pilha == NULL)
 	{
@@ -215,8 +209,14 @@ Pilha *excluirPilha(Pilha *pilha)
 		return NULL;
 	}
 
-	//libera espaco do vetor de elementos motocicletas
-	free(pilha->elementos);
+	//percorre a pilha
+	for(p = pilha->topo; p->prox != NULL; p = p->prox){
+        
+        //garda um valor
+        ref = p;
+        //depois libera
+        free(ref);
+    }
 
 	///libera o espaco da pilha
 	free(pilha);
@@ -235,7 +235,7 @@ Pilha *excluirPilha(Pilha *pilha)
  */
 int push(Pilha *pilha, Motocicleta novaMoto)
 {
-
+	pilhaNo *novoEspaco = (pilhaNo*)malloc(sizeof(pilhaNo));
 	//verifica se a pilha foi criada
 	if(pilha == NULL)
 	{
@@ -243,22 +243,20 @@ int push(Pilha *pilha, Motocicleta novaMoto)
 		return 0;
 	}
 
-	//verifica se a pilha tem espaco
-	if(pilha->topo < TAM)
-	{
-		//insere novo elemento no topo da pilha
-		pilha->elementos[pilha->topo] = novaMoto;
-		
-		//adiciona mais um elemento a pilha
-		++(pilha->topo);
-		
-	}else
-	{
-		printf("\nEspaco esgotado(STACKOVERFLOW)\n");
-		return 0;
-	}
+	novoEspaco->novaMoto = novaMoto;
+	novoEspaco->prox = NULL;
 
-	//retorna 1 se conseguir inserir o elemento com sucesso
+	//verifica se a pilha esta vazia
+	if(pilha->topo == NULL){
+		//adiciona um elemento a pilha
+		pilha->topo = novoEspaco;
+		return 1;
+	}
+	//faz o novo elemento apontar pra o elemento do topo
+	novoEspaco->prox = pilha->topo;
+	//faz pilha topo apontar para o novo elemento
+	pilha->topo = novoEspaco;
+	
 	return 1;
 }
 
@@ -269,38 +267,27 @@ int push(Pilha *pilha, Motocicleta novaMoto)
  */
 void verTopo(Pilha *pilha)
 {
-	//variavel para loop
-	int i;
-
 	//verificando se a pilha foi criada
 	if(pilha == NULL)
 	{
 		printf("\nA pilha nao foi criada");
 	}
 	//verificando se a pilha esta vazia
-	if(pilha->topo == 0)
+	if(pilha->topo == NULL)
 	{
 		printf("\nPilha vazia");
-	}
-	
-	//percorre os elementos da pilha
-	for(i = 0; i <= pilha->topo; i++){
+	}	
+
+	printf("Codigo: %d\n", pilha->topo->novaMoto.cod_moto);
+	printf("Marca: %s\n", pilha->topo->novaMoto.marca);
+	printf("Modelo: %s\n", pilha->topo->novaMoto.modelo);
+	printf("Cor: %c\n", pilha->topo->novaMoto.cor);
+	printf("Cilindrada: %d\n", pilha->topo->novaMoto.cilindrada);
+	printf("Partida: %c\n", pilha->topo->novaMoto.partida);
+	printf("Alimentacao: %c\n", pilha->topo->novaMoto.alimentacao);
+	printf("Carga: %.1f kg\n", pilha->topo->novaMoto.capacidade_carga);
+	printf("Preco: R$ %.2f\n", pilha->topo->novaMoto.preco);
 		
-		//verifica se o elemento esta no topo, se sim o imprime
-		if(i == pilha->topo - 1){
-			printf("Codigo: %d\n", pilha->elementos[i].cod_moto);
-			printf("Marca: %s\n", pilha->elementos[i].marca);
-			printf("Modelo: %s\n", pilha->elementos[i].modelo);
-			printf("Cor: %c\n", pilha->elementos[i].cor);
-			printf("Cilindrada: %d\n", pilha->elementos[i].cilindrada);
-			printf("Partida: %c\n", pilha->elementos[i].partida);
-			printf("Alimentacao: %c\n", pilha->elementos[i].alimentacao);
-			printf("Carga: %.1f kg\n", pilha->elementos[i].capacidade_carga);
-			printf("Preco: R$ %.2f\n", pilha->elementos[i].preco);
-		}
-	}
-
-
 }
 
 /* Nome: pop
@@ -311,23 +298,23 @@ void verTopo(Pilha *pilha)
 int pop(Pilha *pilha)
 {
 	
+	pilhaNo *p, *ref;
+
 	//verifica se a lista foi criada
 	if(pilha == NULL)
 	{
 		printf("\nA Pilha nao foi criada...\n");
 		return 0;
 	}
-	//verifica se o topo(numero de elementos da lista) é diferente de 0
-	if(pilha->topo != 0){
-		//remove um elemento pelo topo
-		--(pilha->topo);
-		return 1;
-	}else{
-		//exibe mensagem caso pilha->topo == 0
-		printf("A pilha esta vazia...");
-		return 0;
-	}
+	
 
+	//guarda o elemento por referencia
+	ref = p;
+	//pilha topo aponta para o elemento abaixo do topo da pilha
+	pilha->topo = pilha->topo->prox;
+	//libera o elemento no topo da pilha
+	free(ref);
+	
 	return 0;
 }
 
@@ -339,7 +326,8 @@ int pop(Pilha *pilha)
 int ehVazia(Pilha *pilha){
 	
 	//declarando variaveis
-	int i, contador = 0;
+	int contador = 0;
+	pilhaNo *p;
 
 	//verifica se a pilha existe
 	if(pilha == NULL)
@@ -356,7 +344,7 @@ int ehVazia(Pilha *pilha){
 	}else{
 		
 		//percorre a pilha contando os elementos
-		for(i = 0; i < pilha->topo; i++){
+		for(p = pilha->topo; p != NULL; p = p->prox){
 			contador = contador + 1;
 		}
 		
@@ -376,7 +364,8 @@ int ehVazia(Pilha *pilha){
  */
 int salvarDados(Pilha* pilha)
 {
-	int i;
+	//declaracao de variaveis
+	pilhaNo *p;
 
 	//verifica se a lista existe 
 	if(pilha == NULL)
@@ -396,19 +385,19 @@ int salvarDados(Pilha* pilha)
 	}
 
 	//loop percorre todos os elementos do vetor
-	for(i = 0; i < pilha->topo; i++)
+	for(p = pilha->topo; p != NULL; p = p->prox)
 	{
 		//utilizamos fprintf() para gravar os atributos do elemento no arquivo .txt
 		fprintf(arquivo, "%d %s %s %c %d %c %c %.1f %.2f\n", 
-		pilha->elementos[i].cod_moto, 
-		pilha->elementos[i].marca, 
-		pilha->elementos[i].modelo,
-		pilha->elementos[i].cor, 
-		pilha->elementos[i].cilindrada, 
-		pilha->elementos[i].partida, 
-		pilha->elementos[i].alimentacao, 
-		pilha->elementos[i].capacidade_carga, 
-		pilha->elementos[i].preco);
+		p->novaMoto.cod_moto, 
+		p->novaMoto.marca, 
+		p->novaMoto.modelo,
+		p->novaMoto.cor, 
+		p->novaMoto.cilindrada, 
+		p->novaMoto.partida, 
+		p->novaMoto.alimentacao, 
+		p->novaMoto.capacidade_carga, 
+		p->novaMoto.preco);
 	}
 	//fecha a operacao no .txt e salva os registros de escrita feito nele
 	fclose(arquivo);

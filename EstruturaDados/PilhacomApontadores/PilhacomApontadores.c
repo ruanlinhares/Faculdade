@@ -1,6 +1,6 @@
 /****************************************************************** 
- * Nome: Pilha com vetores                                        *
- * Descricao: Implementacao de Pilha com uso de vetores (array).  *
+ * Nome: Pilha com Apontadores                                    *
+ * Descricao: Implementacao de Pilha com uso de apontadores.  *
  *            Esse codigo possui as principais operacoes da       *
  *            Pilha, como:                                        *
  *            criar Pilha,                                        *

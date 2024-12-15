@@ -1,6 +1,6 @@
 /****************************************************************** 
- * Nome: fila com vetores                                      	  *
- * Descricao: Implementacao de fila com uso de vetores (array).  *
+ * Nome: Pilha com Apontadores                                    *
+ * Descricao: Implementacao de Fila com uso de Apontadores.       *
  *            Esse codigo possui as principais operacoes da       *
  *            Pilha, como:                                        *
  *            criar fila,                                         *
@@ -9,17 +9,16 @@
  *            excluir fila,                                       *
  * 			  Carregar Dados,                                     *
  * 			  Salvar Dados.                                       *
- * Autor: RUAN VITOR LINHARES                                     *
+ * Autor: RUAN VITOR LINHARES                                     *	
  ******************************************************************/
+
 //Bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-//Definicoes
-#define TAM 6
-
 //Estruturas
+typedef struct FilaNo filaNo;
+
 typedef struct
 {
 	int cod_moto;
@@ -35,31 +34,38 @@ typedef struct
 
 typedef struct
 {
-	int inicio;
-	int fim;
-	Motocicleta *elementos;
+	filaNo *inicio;
+	filaNo *fim;
 } Fila;
 
-//Declarando funcoes
-Fila * criarFila();
+struct FilaNo
+{
+	Motocicleta novaMoto;
+	filaNo *prox;
+};
+
+//Declarando funções
+Fila *criarFila();
+int imprimirElementos(Fila *);
 int enqueue(Fila *, Motocicleta);
 int dequeue(Fila *);
 Fila * excluirFila(Fila*);
 int salvarDados(Fila*);
 int carregarDados(Fila*);
 
-
-
-//Funcao main
+//Função main
 int main ()
 {
 	int opc;
 	char continuar = 's';
 	Motocicleta novaMoto;
+
+
 	Fila *fila = NULL;
 
 	do
 	{
+		printf("========MOTOROAD========");
 		printf("\n1 - Criar Fila");
 		printf("\n2 - Inserir moto");
 		printf("\n3 - Remover moto");
@@ -67,10 +73,11 @@ int main ()
 		printf("\n5 - Salvar dados do programa");
 		printf("\n6 - carregar dados exitentes");
 
+
+
 		printf("\n");
-		printf("\nEscolha uma opcao: ");
-		scanf("%d", &opc);
-		getchar();
+		printf("\nEscolha uma opção: ");
+		scanf(" %d", &opc);
 
 		switch(opc)
 		{
@@ -81,8 +88,8 @@ int main ()
 
 		case 2:
 
-			printf("\nInsira o codigo: ");
-			scanf("%d", &novaMoto.cod_moto);
+			printf("\nInsira o código: ");
+			scanf(" %d", &novaMoto.cod_moto);
 			getchar();
 			printf("\nInsira a marca: ");
 			scanf("%s", novaMoto.marca);
@@ -94,20 +101,21 @@ int main ()
 			scanf("%d", &novaMoto.cilindrada);
 			printf("\nInsira o partida: ");
 			scanf(" %c", &novaMoto.partida);
-			printf("\nInsira o alimentacao: ");
+			printf("\nInsira o alimentação: ");
 			scanf(" %c", &novaMoto.alimentacao);
 			printf("\nInsira o carga: ");
 			scanf("%f", &novaMoto.capacidade_carga);
-			printf("\nInsira o preco: ");
+			printf("\nInsira o preço: ");
 			scanf("%f", &novaMoto.preco);
 
 			enqueue(fila, novaMoto);
 
 			break;
 
-
 		case 3:
+
 			dequeue(fila);
+	
 			break;
 
 		case 4:
@@ -124,7 +132,7 @@ int main ()
 
 			carregarDados(fila);
 			break;
-		
+
 		default:
 
 			printf("\nOpcao invalida");
@@ -138,13 +146,14 @@ int main ()
 		{
 			exit(0);
 		}
-		
+
 	}
 	while(continuar == 's' || continuar == 'S' );
+	
 	return 0;
 }
 
-//Funcoes
+//Funções
 
 /* Nome: criarFila
  * Parametro: nenhum
@@ -153,34 +162,24 @@ int main ()
  */
 Fila *criarFila()
 {
-	//aloca o espaco para a fila
+	//Reserva espaço para um ponteiro do tipo fila;
 	Fila *novaFila = (Fila*)malloc(sizeof(Fila));
 
-	//vrifica se a lista foi criada
+	//Verifica se a fila existe;
 	if(novaFila == NULL)
 	{
-		printf("Erro na alocacao de memoria");
+		printf("\nErro na alocacao de memoria...");
 		return NULL;
 	}
 	
-	//define valores padrão para inicio e fim	
-	novaFila->inicio = 0;
-	novaFila->fim = 0;
-
-	//aloca espaco para o vetor de motos
-	novaFila->elementos = (Motocicleta *)malloc(TAM * sizeof(Motocicleta));
-
-	//verifica se o vetor de motos foi alocado
-	if(novaFila->elementos == NULL)
-	{
-		printf("\nNao tem espaco");
-		free(novaFila);
-		return NULL;
-	}
-
-	//se tudo deu certo retorna a fila
+	novaFila->inicio = NULL;
+	novaFila->fim = NULL;
+	
+	//Caso existir retorna o valor da nova Fila e a armazena na variavel fila;
 	return novaFila;
 }
+
+
 
 /* Nome: enqueue
  * Parametro: Fila - ponteiro que possui o endereco fila/ novaMoto - elemento que queremos adicionar
@@ -189,28 +188,34 @@ Fila *criarFila()
  */
 int enqueue(Fila *fila, Motocicleta novaMoto)
 {
-	//veriifica se a fila foi criada
+	//Criando espaço para armazenar o novo elemento e seu ponteiro, espaço do tamanho listaNo;
+	filaNo *novoEspaco = (filaNo*)malloc(sizeof(filaNo));
+
+	//Verifica se a lista foi criada;
 	if(fila == NULL)
 	{
-		printf("\nA Fila nao foi criada\n");
+		printf("\nA fila nao foi criada...\n");
 		return 0;
 	}
 
-	// Verifica se é possível adicionar um elemento na fila
-	if((fila->fim +1)%TAM != fila->inicio)
+	//Atribui o valor inserido para o novo elemento e faz ele apontar para NULL;
+	novoEspaco->novaMoto = novaMoto;
+	novoEspaco->prox = NULL;
+
+	//Verifica se existe algum elemento na lista;
+	if(fila->inicio == NULL)
 	{
-		// Insere o novo elemento (novaMoto) na posição apontada por 'fim'
-		fila->elementos[fila->fim] = novaMoto;
-		// Atualiza o ponteiro 'fim' para a próxima posição de forma circular
-		fila->fim = (fila->fim +  1) % TAM;
-	}
-	else
-	{
-		printf("\nEspaco esgotado\n");
-		return 0;
+		//Caso não, adiciona um elemento ao inicio da lista;
+		fila->inicio = novoEspaco;
+		fila->fim = novoEspaco;
+		return 1;
 	}
 
-	//retorna 1 se conseguir adicionar o elemento
+	//adiciona o elemento ao fim da fila
+	fila->fim->prox = novoEspaco;
+	//altera o ultimo elemento da fila para o adicionado recentemente
+	fila->fim = fila->fim->prox;
+
 	return 1;
 }
 
@@ -221,27 +226,26 @@ int enqueue(Fila *fila, Motocicleta novaMoto)
  */
 int dequeue(Fila *fila)
 {
-	//verifica se a fila existe
+	//ponteiro criado para armazenar um valor para liberar seu espaço de memoria;
+	filaNo *ref;
+
+	//Verifica se a fila foi criada;
 	if(fila == NULL)
 	{
-		printf("\nA fila nao foi criada\n");
+		printf("\nA fila nao foi criada...");
 		return 0;
 	}
 
-	// Verifica se é possível avançar o ponteiro
-	if((fila->inicio +1) % TAM != fila->fim)
-	{
-		// Atualiza o ponteiro 'inicio' para a próxima posição de forma circular
-    	// Isso simula a remoção do elemento atual da fila
-		fila->inicio = (fila->inicio+1) % TAM;
-	}
-	else
-	{
-		printf("\nEspaco esgotado\n");
+	//verifica se a fila esta vazia;
+	if(fila->inicio == NULL){
+		printf("\nA fila esta vazia...");
 		return 0;
 	}
-
-	//retorna 1 se conseguir remover
+	
+	//remove o elemento na posição inicial 
+	ref = fila->inicio;
+	fila->inicio = fila->inicio->prox;
+	
 	return 1;
 }
 
@@ -252,45 +256,59 @@ int dequeue(Fila *fila)
  */
 Fila *excluirFila(Fila *fila)
 {
-	//verifica se a fila existe
+	//ponteiro criado para armazenar um valor para liberar seu espaco na memoria;
+	filaNo *ref;
+
+	//verifica se a fila existe;
 	if(fila == NULL)
 	{
 		printf("\nA fila nunca existiu...");
 		return NULL;
 	}
 
-	//desaloca da memoria o vetor de motocicletas
-	free(fila->elementos);
+	//libera todos os elementos da fila;	
+	while(fila->inicio != NULL){
+		//guarda a referencia do primeiro elemento
+		ref = fila->inicio;
 
-	//desaloca da memoria o vetor de fila
+		//faz fila inicio apontar para tras do elemento a ser removido
+		fila->inicio = fila->inicio->prox;
+		
+		//libera o primeiro elemento
+		free(ref);
+	}
+	
+	//libera o espaco da fila
 	free(fila);
 
 	printf("\nFila de Motos excluida com sucesso...");
 
 	return NULL;
+
 }
 
 /* Nome: salvarDados
- * Parametro: lista - ponteiro que possui o endereco lista
+ * Parametro: fila - ponteiro que possui o endereco fila
  * Retorno: 1 - para quando salva os dados || 0 - quando não consegue salvar os dados
  * Descricao: Funcao cria um documento ".txt" e insere/salva nele as informações
  * 			  que estavam na memória do programa em execução.
  */
-int salvarDados(Fila* pilha)
+int salvarDados(Fila* fila)
 {
-	int i;
+	//declaracao de variaveis
+	filaNo *p;
 
 	//verifica se a lista existe 
-	if(pilha == NULL)
+	if(fila == NULL)
 	{
-		printf("\nA Fila nao foi criada");
+		printf("\nA fila nao foi criada");
 		return 0;
 	}
 
 	//cria um ponteiro do tipo FILE e utiliza fopen() para criar um .txt e escrever
 	FILE * arquivo = fopen("RegistroMotos.txt", "w");
 
-	//verifica se o .txt dfoi criado 
+	//verifica se o .txt foi criado 
 	if(arquivo == NULL)
 	{
 		printf("Erro ao abrir o aquivo");
@@ -298,19 +316,19 @@ int salvarDados(Fila* pilha)
 	}
 
 	//loop percorre todos os elementos do vetor
-	for(i = pilha->inicio; i < pilha->fim; i++)
+	for(p = fila->inicio; p != NULL; p = p->prox)
 	{
 		//utilizamos fprintf() para gravar os atributos do elemento no arquivo .txt
 		fprintf(arquivo, "%d %s %s %c %d %c %c %.1f %.2f\n", 
-		pilha->elementos[i].cod_moto, 
-		pilha->elementos[i].marca, 
-		pilha->elementos[i].modelo,
-		pilha->elementos[i].cor, 
-		pilha->elementos[i].cilindrada, 
-		pilha->elementos[i].partida, 
-		pilha->elementos[i].alimentacao, 
-		pilha->elementos[i].capacidade_carga, 
-		pilha->elementos[i].preco);
+		p->novaMoto.cod_moto, 
+		p->novaMoto.marca, 
+		p->novaMoto.modelo,
+		p->novaMoto.cor, 
+		p->novaMoto.cilindrada, 
+		p->novaMoto.partida, 
+		p->novaMoto.alimentacao, 
+		p->novaMoto.capacidade_carga, 
+		p->novaMoto.preco);
 	}
 	//fecha a operacao no .txt e salva os registros de escrita feito nele
 	fclose(arquivo);
@@ -322,12 +340,12 @@ int salvarDados(Fila* pilha)
 }
 
 /* Nome: carregarDados
- * Parametro: lista - ponteiro que possui o endereco lista
+ * Parametro: fila - ponteiro que possui o endereco fila
  * Retorno: 1 - quando carrega os dados na memoria do programa em execucao || 0 - caso contrario
  * Descricao: Funcao criada para carregar os dados de um documento ".txt" para a memoria
  * 			  programa em execucao
  */
-int carregarDados(Fila *pilha)
+int carregarDados(Fila *fila)
 {
 	//define o numero de caracteres a ser lido por linha
 	char registro[150];
@@ -359,7 +377,7 @@ int carregarDados(Fila *pilha)
 			&registroMoto.preco) == 9){
 			
 			//insere no nosso elemento moto os dados lidos
-			enqueue(pilha, registroMoto);	
+			enqueue(fila, registroMoto);	
 		}	
 	
 	}
@@ -370,4 +388,6 @@ int carregarDados(Fila *pilha)
 	//retorna 1 se o aquivo conseguir carregar os dados na memoria
 	return 1;
 }
+
+
 

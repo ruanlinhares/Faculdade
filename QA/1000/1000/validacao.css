@@ -1,0 +1,65 @@
+.navbar {
+    overflow: hidden;
+    background-color:#ac1f8e;  
+}
+.navbar ul {
+    list-style-type: none; 
+    margin: 0;
+    padding: 0;
+}
+.navbar li {
+    float: left;  
+}
+.navbar li a {
+    font-family: Arial, Helvetica, sans-serif;
+    display: block;
+    color: white;  
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none; 
+}
+.navbar li a:hover {
+    background-color: #111;  
+}
+
+input[type="text"] {
+    border-color: white;
+    border-style:inset;
+    border-radius: 5px; 
+    width: 400px; 
+    height: 30px;   
+}
+input[type="password"] {
+    border-color: white;
+    border-style:inset;
+    border-radius: 5px;
+    width: 300px; 
+    height: 20px;
+      
+}
+
+
+input:valid{
+    border-color: green;
+}
+
+.form{
+    margin-top: 40px;
+    margin-left: 200px;
+    font-family: sans-serif;
+    font-size: small;
+}
+
+button{
+    height: 30px;
+    width: 100px;
+    color: white;
+    background-color: #cf4f8b;
+    border-radius: 5px;
+    border-color: white;
+    
+}
+button:hover {
+    background-color: #ac1f8e;
+}
+

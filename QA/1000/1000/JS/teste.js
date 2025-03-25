@@ -10,3 +10,7 @@ inputName.addEventListener("keypress", function(e){
     }
 });
 
+function erase(){
+    
+    document.getElementById('name').value = "";
+}

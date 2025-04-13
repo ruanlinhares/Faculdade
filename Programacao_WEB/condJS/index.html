@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercicos de programação web</title>
+    <script src="Algoritimos.js"></script>
+</head>
+<body>
+    <script>alert("Pressione F12 ou CTRL + SHIFT + I para abrir o console")</script>
+
+    <div style="display: flex; flex-direction: column; gap: 1em;">
+        <button onclick="exercicio1()">Exercicio 01</button>
+
+        <div style="display: none;" class="blocoCodigo">
+            <pre>
+                <code>
+                    let nome = "Ruan Linhares";
+                    let idade = 20;
+        
+                    console.log(`Olá, meu nome é ${nome} e eu tenho ${idade} anos`);
+                </code>
+            </pre>
+        </div>
+
+        <button onclick="exercicio2()">Exercicio 02</button>
+
+        <div style="display: none;" class="blocoCodigo">
+            <pre>
+                <code>
+                    let numero1 = 50;
+                    let numero2 = 40;
+                
+                    let resultado = numero1 + numero2;
+                
+                    console.log(`${numero1} + ${numero2} = ${resultado}`);
+                </code>
+            </pre>
+        </div>
+
+        <button onclick="exercicio3()">Exercicio 03</button>
+        <button onclick="exercicio4()">Exercicio 04</button>
+        <button onclick="exercicio5()">Exercicio 05</button>
+        <button onclick="exercicio6()">Exercicio 06</button>
+        <button onclick="exercicio7()">Exercicio 07</button>
+        <button onclick="exercicio8()">Exercicio 08</button>
+        <button onclick="exercicio9()">Exercicio 09</button>
+        <button onclick="exercicio10()">Exercicio 10</button>
+
+        <button style="width: 70px;" id="showbutton" onclick="mostrarCodigo()">Mostrar códigos</button>
+    </div>
+    
+</body>
+</html>

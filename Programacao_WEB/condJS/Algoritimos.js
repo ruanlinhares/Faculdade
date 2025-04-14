@@ -1,18 +1,19 @@
 //funcoes de programa
 
-/*function mostrarCodigo(){
+function mostrarCodigo(num){
     //*CORRIGIR, NAO MOSTRA AS TODOS OS CODIGOS *
-    const code = document.querySelectorAll(".blocoCodigo");
-    const botao = document.getElementById("showbutton");
+    let variableId = "blocoCodigo" + num;
+    const code = document.getElementById(variableId);
+    //const botao = document.getElementById("showbutton");
 
     if(code.style.display === "none"){
         code.style.display = "block";
-        botao.textContent = "Esconder Códigos";
+        //botao.textContent = "Esconder Códigos";
     }else{
         code.style.display = "none";
-        botao.textContent = "Mostrar códigos";
+        //botao.textContent = "Mostrar códigos";
     }
-}*/
+}
 
 //funcoes dos exercicios
 
@@ -156,6 +157,6 @@ function exercicio10(){
         console.log(transformInFahrenheit + " Fahrenheit"); 
     } else if(escala === "fahrenheit"){
         let transformInCelsius = ((temperatura - 32) * 5)/9
-        console.log(transformInCelsius + "Celsius")
+        console.log(transformInCelsius + " Celsius")
     }
 }

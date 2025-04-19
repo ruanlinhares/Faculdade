@@ -1,7 +1,14 @@
-//funcoes de programa
+/*
+Estou enviando estes codigos de exercicio de duas maneiras, pelo campo de envio e 
+por um documento .js, os exercicios estao separados por funcoes, pode copiar
+cada campo para teste.
+*/
 
+
+
+
+//funcoes de programa (ignore, nao faz parte dos exercicios)
 function mostrarCodigo(num){
-    //*CORRIGIR, NAO MOSTRA AS TODOS OS CODIGOS *
     let variableId = "blocoCodigo" + num;
     const code = document.getElementById(variableId);
     //const botao = document.getElementById("showbutton");
@@ -17,6 +24,7 @@ function mostrarCodigo(num){
 
 //funcoes dos exercicios
 
+//Exercicio 1
 function exercicio1(){
     let contador = 1;
 
@@ -26,6 +34,7 @@ function exercicio1(){
     }
 }
 
+//Exercicio 2
 function exercicio2(){
     let controle = 1;
     
@@ -43,6 +52,7 @@ function exercicio2(){
     
 }
 
+//Exercicio 3
 function exercicio3(){
    let numero = parseInt(prompt("Digite um número para saber sua tabuada: "));
 
@@ -51,6 +61,7 @@ function exercicio3(){
     }
 }
 
+//Exercicio 4
 function exercicio4(){
     for(i = 0; i <= 20; i++){
         if(i % 2 == 0){
@@ -59,6 +70,7 @@ function exercicio4(){
     }
 }
 
+//Exercicio 5
 function exercicio5(){
     const numeros = [10, 20, 30, 40, 50]
     let soma = 0;
@@ -70,6 +82,7 @@ function exercicio5(){
     console.log(soma);
 }
 
+//Exercicio 6
 function exercicio6(){
     function boasVindas(nome){
         console.log(`Seja bem-vindo(a), ${nome}!`);
@@ -80,6 +93,7 @@ function exercicio6(){
     boasVindas(nome);
 }
 
+//Exercicio 7
 function exercicio7(){
     function dobro(numero){
         return numero * 2;
@@ -90,6 +104,7 @@ function exercicio7(){
     console.log(dobro(numero));
 }
 
+//Exercicio 8
 function exercicio8(){
     function ehPrimo(numero){
         if (numero <= 1) return false;
@@ -109,17 +124,33 @@ function exercicio8(){
 
 }
 
+//Exercicio 9
 function exercicio9(){
-    
+    let numero = parseInt(prompt("Digite um número: "));
+    let contador = 0;
+    let soma = 0;
+
+    while(contador <= numero){
+        soma = soma + contador;
+        contador++;
+    }
+
+    console.log(soma);
 }
 
+//Exercicio 10
 function exercicio10(){
     
     const nomes = ["Ana", "Carlos", "João", "Marina"];
+    
 
-    nomes.forEach(function(valor){
-        soma = soma + valor;
-    });
-
-    console.log(soma);
+    function listaNomes(nomes){
+        
+        nomes.forEach(function(valor){
+            console.log(`Olá, ${valor}!`);
+        });
+    }
+    
+    listaNomes(nomes);
+   
 }

@@ -1,5 +1,10 @@
-//funcoes de programa
+/*
+Estou enviando estes codigos de exercicio de duas maneiras, pelo campo e envio e 
+por um documento .js, os exercicios estao separados por funcoes, pode copiar
+cada campo para teste.
+*/
 
+//funcoes de programa (ignore, nao faz parte dos exercicios)
 function mostrarCodigo(num){
     //*CORRIGIR, NAO MOSTRA AS TODOS OS CODIGOS *
     let variableId = "blocoCodigo" + num;
@@ -17,6 +22,7 @@ function mostrarCodigo(num){
 
 //funcoes dos exercicios
 
+//Exercicio 1
 function exercicio1(){
     let nome = "Ruan Linhares";
     let idade = 20;
@@ -24,6 +30,7 @@ function exercicio1(){
     console.log(`Olá, meu nome é ${nome} e eu tenho ${idade} anos`);    
 }
 
+//Exercicio 2
 function exercicio2(){
     let numero1 = 50;
     let numero2 = 40;
@@ -33,6 +40,7 @@ function exercicio2(){
     console.log(`${numero1} + ${numero2} = ${resultado}`);
 }
 
+//Exercicio 3
 function exercicio3(){
     let idade = parseInt(prompt("Qual a sua idade ?"));
 
@@ -43,6 +51,7 @@ function exercicio3(){
     }
 }
 
+//Exercicio 4
 function exercicio4(){
     let numero1 = parseInt(prompt("Informe um número inteiro: "));
     let numero2 = parseInt(prompt("Informe outro número inteiro: "));
@@ -56,6 +65,7 @@ function exercicio4(){
     }
 }
 
+//Exercicio 5
 function exercicio5(){
     let numero = parseInt(prompt("Digite um número para saber se é ímpar ou par: "));
 
@@ -64,6 +74,7 @@ function exercicio5(){
     console.log(`${numero} é um número ${verificacao}`);
 }
 
+//Exercicio 6
 function exercicio6(){
     let nota = parseInt(prompt("Digite uma nota de 0 a 10: "));
 
@@ -80,6 +91,7 @@ function exercicio6(){
     }
 }
 
+//Exercicio 7
 function exercicio7(){
     let numero = parseInt(prompt("Digite um número entre 1 e 7 para saber o dia da semana: "));
 
@@ -110,6 +122,7 @@ function exercicio7(){
     }
 }
 
+//Exercicio 8
 function exercicio8(){
     let numero1 = parseInt(prompt("Digite um número: "));
     let numero2 = parseInt(prompt("Digite outro número: "));
@@ -134,6 +147,7 @@ function exercicio8(){
     }
 }
 
+//Exercicio 9
 function exercicio9(){
     let nivelAcesso = prompt("Digite seu nível de acesso: ").toLowerCase();
 
@@ -148,6 +162,7 @@ function exercicio9(){
     }
 }
 
+//Exercicio 10
 function exercicio10(){
     let temperatura = parseFloat(prompt("Digite uma temperatura: "));
     let escala = prompt("Qual a escala de origem ? [Celsius/Fahrenheit]").toLowerCase();

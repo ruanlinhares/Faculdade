@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Título da Página</title>
+    <link rel="stylesheet" href="validacao.css">
+    <script src="JS/teste.js" defer></script>
+
+    <style>
+      body {
+          background-image: url('img/back.jpg');
+          background-size: 49%;
+          margin-bottom: 290px;
+          background-repeat: no-repeat;
+          background-position: right;
+      }
+  </style>
+
+</head>
+<body>
+
+  <div class="navbar">
+    
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#services">Serviços</a></li>
+      <li><a href="#about">Sobre</a></li>
+      <li><a href="#contact">Contato</a></li>
+  </ul>
+    
+</div>
+
+ 
+  <main>
+    <form action="/submit_form" method="post" class="form">
+        <h1>Cadastre seu usuário</h1>
+     
+        <!--
+        <label for="nome">Nome Completo:</label><br>
+        <input type="text" id="name" name="nome" placeholder="Digite seu nome completo" required maxlength="20"><br><br>
+        -->
+
+        <!--TRATAMENTOS: MÁXIMO 10 LETRAS, NÃO PERMITE NÚMEROS, SEM ESPAÇOS EM BRANCO-->>
+        <label for="username">Usuário:</label><br>
+        <input type="text" id="username" name="username" placeholder="Escolha um nome de usuário" required><br><br>
+        
+        <!--
+        <label for="password">Senha:</label><br>
+        <input type="password" id="password" name="password" placeholder="Senha com no máximo 8 dígitos" required maxlength="8"><br><br>
+        <label for="password">Digite a senha novamente:</label><br>
+        <input type="password" id="repassword" name="password" placeholder="Repita a senha" required maxlength="8"><br><br>
+        -->
+                
+          <button type="submit" class="redirect-button" id="submitButton" formaction="file:///C:/Users/wagne/Desktop/1000/index.html">Cadastrar</button>
+          <button type="submit" class="redirect-button" formaction="file:///C:/Users/wagne/Desktop/1000/index.html">Cancelar</button>
+        
+        
+      </div>
+    </form>
+    
+  </main>
+
+    <footer>
+              
+    </footer>
+    </body>
+</html>

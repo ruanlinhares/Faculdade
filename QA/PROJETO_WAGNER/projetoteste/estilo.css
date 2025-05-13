@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f3f3f3;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: #212121;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden; /* Adicionado para evitar scroll devido à animação do botão (se necessário) */
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 4px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    padding: 32px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.login-box h1 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #3f51b5;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.input-group {
+    margin-bottom: 24px;
+}
+
+.input-group label {
+    display: block;
+    color: #757575;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.input-group input[type="email"],
+.input-group input[type="password"] {
+    width: calc(100% - 16px);
+    padding: 12px;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #212121;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input[type="email"]:focus,
+.input-group input[type="password"]:focus {
+    outline: none;
+    border-color: #3f51b5;
+}
+
+.input-group input[type="email"].valid,
+.input-group input[type="password"].valid {
+    border-color: #4caf50;
+}
+
+.input-group input[type="email"].invalid,
+.input-group input[type="password"].invalid {
+    border-color: #f44336;
+}
+
+.input-group .alert {
+    color: #f44336;
+    font-size: 0.875em;
+    margin-top: 4px;
+}
+
+.button-wrapper { /* Container para o botão e o SVG */
+    position: relative;
+    width: 100%;
+    height: 60px; /* Altura do botão */
+    margin-top: 16px; /* Espaçamento acima do botão */
+}
+
+.btn {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid #91C9FF; /* Cor da borda inicial */
+    outline: none;
+    transition: background 0.3s ease-in-out; /* Transição para o hover de fundo */
+    position: relative; /* Para posicionar o span */
+    overflow: hidden; /* Esconde o SVG que ultrapassa as bordas */
+    border-radius: 4px; /* Manter o border-radius */
+}
+
+.btn:hover {
+    background: rgba(63, 81, 181, 0.1); /* Um leve efeito de cor ao passar o mouse */
+}
+
+.btn span {
+    color: #3f51b5; /* Cor do texto do botão */
+    font-size: 16px;
+    font-weight: 500;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.btn svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    fill: none;
+    stroke: #3f51b5; /* Cor do contorno */
+    stroke-dasharray: 150 480;
+    stroke-dashoffset: 150;
+    transition: stroke-dashoffset 1s ease-in-out;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box; /* Garante que a borda não aumente o tamanho */
+    border-radius: 4px; /* Manter o border-radius do SVG */
+}
+
+.btn:hover svg {
+    stroke-dashoffset: -480;
+}
+
+.menu-ficticio {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.menu-ficticio a {
+    color: #757575;
+    text-decoration: none;
+    margin: 0 16px;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.menu-ficticio a:hover {
+    color: #3f51b5;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .container {
+        margin: 16px;
+        padding: 24px;
+    }
+
+    .login-box h1 {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .input-group {
+        margin-bottom: 16px;
+    }
+
+    .button-wrapper {
+        height: 50px; /* Ajustar altura para telas menores */
+    }
+
+    .btn {
+        font-size: 14px;
+    }
+
+    .menu-ficticio a {
+        margin: 0 8px;
+    }
+}

@@ -8,7 +8,7 @@ describe('template spec', () => {
   ];
 
   const senhas = [
-    "A1b!",
+    "1@Bc",
     " ",
     "abc"
   ];
@@ -29,32 +29,34 @@ describe('template spec', () => {
   };
 
   it('Testa diferentes combinações de email e senha', () => {
+    
     cy.visit('http://127.0.0.1:5500/projetoteste/login.html');
 
-    emails.forEach((email) => {
+    for(const email of emails){
+      
       cy.get('#email').clear().type(email);
 
-      senhas.forEach((senha) => {
+      for(const senha of senhas){
+        
         cy.get('#password').clear().type(senha);
-        cy.get('#btn').click();
+        cy.get('.btn').click();
 
-        
-        cy.url().then((url) => {
-          cy.on('window:alert', (alertText) => {
-            if (alertText.includes('Credenciais inválidas')) {
-              cy.log(`Tentativa mal-sucedida com email: ${email} e senha: ${senha}`);
-            }
-          });
 
-          if (!emailValido(email) || !senhaForte(senha)) {
-            cy.log(`Tentativa mal-sucedida com dados inválidos. Email: ${email} e Senha: ${senha}`);
-          } else if (url.includes('sucesso.html')) {
+        if (emailValido(email) && senhaForte(senha)) {
+          cy.wait(1000);
+          cy.url().should('include', 'sucesso.html').then(() => {
             cy.log(`Login bem-sucedido com email: ${email} e senha: ${senha}`);
-          }
-        });
-        
-        cy.visit('http://127.0.0.1:5500/projetoteste/login.html');
-      });
-    });
+            cy.visit('http://127.0.0.1:5500/projetoteste/login.html');
+            cy.get('#email').clear().type(email);
+             // Prepara para a próxima iteração
+          });
+        }else {
+            cy.log(`Tentativa mal-sucedida com email: ${email} e senha: ${senha}`);
+            cy.visit('http://127.0.0.1:5500/projetoteste/login.html');
+            cy.get('#email').clear().type(email);
+            // Aqui você pode adicionar mais verificações se elementos de erro aparecem na página de login
+        }
+      };
+    };
   });
 });

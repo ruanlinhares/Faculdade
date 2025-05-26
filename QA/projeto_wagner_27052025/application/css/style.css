@@ -1,0 +1,50 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    max-height: 100vh;
+}
+
+header{
+    display: flex;
+    height: 25vh;
+    padding-top: 10vh;
+    align-items: center;
+    justify-content: center;
+}.capivara{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-content{
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}.login-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    
+}.input-style{
+    display: flex;
+    border-radius: 0.4em;
+    border-style: solid;
+    border-width: 2px;
+    border-color: solid rgb(212, 212, 212);
+    height: 30px;
+    width: 250px;
+}
+
+footer{
+    display: flex;
+    height: 15vh;
+    background-color: rgb(248, 240, 229);
+    align-items: center;
+    justify-content: center;
+}

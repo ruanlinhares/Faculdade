@@ -4,25 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/script.js"></script>
+    <link rel="shortcut icon" href="../assets/capivara.png" type="image/x-icon">
     <title>Cadastro Capivara</title>
 </head>
 <body>
-    <header>
-        <div class="capivara">
-            <img src="../assets/capivara.png" alt="capivara fofa" style="width: 11em;">
-        </div>
-    </header>
+    <header></header>
+
     <section class="main-content">
+        
+        <div class="capivara">
+            <img src="../assets/capivara.png" alt="capivara fofa" style="width: 12em;">
+        </div>
+
         <div class="login-section">
-            <label for="">Nome de usuário</label>
-            <input type="text" id="Username-cadastro" class="input-style">
-            <label for="" >Email</label>
-            <input type="text" id="Email-cadastro" class="input-style">
-            <label for="">Senha</label>
-            <input type="text" id="Senha-cadastro" class="input-style">
+            <form action="">
 
-            <button type="button"></button>
+                <div class="input-section">
+                    <label for="">Nome de usuário</label>
+                    <input type="text" id="Username-cadastro" class="input-style" name="usename" required minlength="6" maxlength="20">  
+                </div>
+                <div class="input-section">
+                    <label for="" >Email</label>
+                    <input type="text" id="Email-cadastro" class="input-style" name="email" onblur="valid_email()"> 
+                </div>
+                <div class="input-section">
+                    <label for="">Senha</label>
+                    <input type="text" id="Senha-cadastro" class="input-style" name="senha" onblur="valid_password()">  
+                </div>
 
+                <button type="button" id="botao-cadastro" class="button-style" value="Cadastrar" onclick="submit_info()"><span>Cadastrar</span></button> 
+            
+            </form>
+           
         </div>
  
     </section>

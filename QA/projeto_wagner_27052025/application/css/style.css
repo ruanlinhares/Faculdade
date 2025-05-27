@@ -9,26 +9,30 @@ body{
 
 header{
     display: flex;
-    height: 25vh;
-    padding-top: 10vh;
-    align-items: center;
-    justify-content: center;
-}.capivara{
-    display: flex;
+    height: 10vh;
     align-items: center;
     justify-content: center;
 }
 
 .main-content{
-    height: 50vh;
+    height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
-}.login-section{
+    flex-direction: column;
+}.capivara{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}.login-section form{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color:  rgb(248, 240, 229);
+    border-radius: 2em;
+    height: 25em;
+    width: 25em;
     gap: 1em;
     
 }.input-style{
@@ -39,11 +43,26 @@ header{
     border-color: solid rgb(212, 212, 212);
     height: 30px;
     width: 250px;
+}.button-style{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #a1faa1;
+    border-radius: 0.5em;
+    border-style: none;
+    height: 3.5em;
+    width: 12em;
+    margin-top: 3vh;
+    
+}.button-style:hover{
+    cursor: pointer;
+    transition: 1s;
+    transform: scale(1.1);
 }
 
 footer{
     display: flex;
-    height: 15vh;
+    height: 10vh;
     background-color: rgb(248, 240, 229);
     align-items: center;
     justify-content: center;
